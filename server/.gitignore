@@ -84,6 +84,13 @@ docs/_build/
 .pybuilder/
 target/
 
+# Node.js
+node_modules/
+dist/
+coverage/
+.env
+*.log
+
 # Jupyter Notebook
 .ipynb_checkpoints
 

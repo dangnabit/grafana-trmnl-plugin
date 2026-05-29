@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  grafana-trmnl-server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: grafana-trmnl-server
+    restart: always
+    ports:
+      - '8080:8080'
+    environment:
+      - NODE_ENV=production
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'wget',
+          '--quiet',
+          '--tries=1',
+          '--spider',
+          'http://localhost:8080/health',
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '10m'
+        max-file: '3'
+    networks:
+      - grafana-trmnl
+
+networks:
+  grafana-trmnl:
+    driver: bridge

@@ -1,20 +1,15 @@
-FROM python:3.11
+FROM node:lts-alpine
 
-# Set the working directory
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
-COPY requirements.txt ./
-
-# Install the required dependencies
-RUN pip install -r requirements.txt
+COPY package.json package-lock.json* ./
+RUN npm install --production
 
 COPY . ./
+RUN npm run build
 
 
 
 # Make port 8080 available to the world outside this container
 EXPOSE 8080
-
-# Run app.py when the container launches
-CMD python app.py
+CMD ["npm", "start"]
