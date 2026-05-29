@@ -31,6 +31,8 @@ export function parsePanelUrl(panelUrl: string): {
     }
   }
 
+  console.log(host, uid, panelId, variables);
+
   return { host, uid, panelId, variables };
 }
 
@@ -200,6 +202,7 @@ export async function queryGrafanaPanel(
   panelType: string,
 ): Promise<[any, any]> {
   const queryUrl = `${host}/api/ds/query`;
+  console.log(queryUrl);
   const response = await fetch(queryUrl, {
     method: 'POST',
     headers: {
