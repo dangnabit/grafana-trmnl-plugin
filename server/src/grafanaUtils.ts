@@ -202,18 +202,22 @@ export async function queryGrafanaPanel(
   panelType: string,
 ): Promise<[any, any]> {
   const queryUrl = `${host}/api/ds/query`;
+  const body = JSON.stringify({
+    queries: processedTargets,
+    from: String(fr),
+    to: String(to),
+  });
+
   console.log(queryUrl);
+
+  console.log(body);
   const response = await fetch(queryUrl, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      queries: processedTargets,
-      from: String(fr),
-      to: String(to),
-    }),
+    body,
   });
 
   const responseData = await response.json().catch(() => ({}));
