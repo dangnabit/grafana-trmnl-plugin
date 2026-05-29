@@ -208,9 +208,6 @@ export async function queryGrafanaPanel(
     to: String(to),
   });
 
-  console.log(queryUrl);
-
-  console.log(body);
   const response = await fetch(queryUrl, {
     method: 'POST',
     headers: {
@@ -224,7 +221,7 @@ export async function queryGrafanaPanel(
 
   if (!response.ok) {
     throw new GrafanaQueryException(
-      `Error querying Grafana panel: ${response.status} ${response.statusText}`,
+      `Error querying Grafana panel: ${response.status} ${response.statusText} ${JSON.stringify(responseData)}`,
     );
   }
 
