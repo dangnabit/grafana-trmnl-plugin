@@ -49,7 +49,7 @@ export async function getDashboardMetadata(
     throw new DashboardMetadataException('Invalid dashboard metadata response');
   });
 
-  console.log(data);
+  console.log(JSON.stringify(data.dashboard.panels));
 
   if (!response.ok) {
     throw new DashboardMetadataException(
