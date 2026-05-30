@@ -31,8 +31,6 @@ export function parsePanelUrl(panelUrl: string): {
     }
   }
 
-  console.log(host, uid, panelId, variables);
-
   return { host, uid, panelId, variables };
 }
 
