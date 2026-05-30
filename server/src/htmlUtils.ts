@@ -87,7 +87,10 @@ export function generateStatHtml(
 
         // Stat panel rendering using Chartkick with Highcharts adapter
         new Chartkick.LineChart("chart", [[1, chartData.value]], {
+          adapter: "highcharts",
           library: {
+            height: null,
+            animation: false,
             chart: {
               type: "line",
               animation: false,
@@ -159,7 +162,10 @@ export function generateGaugeHtml(
 
         // Gauge panel rendering using Chartkick with Highcharts adapter
         new Chartkick.LineChart("chart", [[1, chartData.value]], {
+          adapter: "highcharts",
           library: {
+            height: null,
+            animation: false,
             chart: {
               type: "gauge",
               animation: false,
@@ -292,7 +298,10 @@ export function generateTimeseriesHtml(
 
             // Multi-series timeseries rendered with Chartkick + Highcharts adapter
             new Chartkick.LineChart("chart", chartData, {
+              adapter: "highcharts",
               library: {
+                height: null,
+                animation: false,
                 chart: {
                   type: "spline",
                   animation: false,
@@ -376,7 +385,10 @@ export function generateTimeseriesHtml(
 
             // Single series timeseries rendered with Chartkick + Highcharts adapter
             new Chartkick.LineChart("chart", chartData, {
+              adapter: "highcharts",
               library: {
+                height: null,
+                animation: false,
                 chart: {
                   type: "spline",
                   animation: false,
@@ -483,7 +495,10 @@ export function generateBarGaugeHtml(
 
             // Multi-series bar gauge rendered with Chartkick + Highcharts adapter
             new Chartkick.ColumnChart("chart", chartData, {
+              adapter: "highcharts",
               library: {
+                height: null,
+                animation: false,
                 chart: {
                   type: "column",
                   animation: false,
@@ -571,7 +586,10 @@ export function generateBarGaugeHtml(
 
             // Single series bar gauge rendered with Chartkick + Highcharts adapter
             new Chartkick.ColumnChart("chart", seriesData, {
+              adapter: "highcharts",
               library: {
+                height: null,
+                animation: false,
                 chart: {
                   type: "column",
                   animation: false,
@@ -698,7 +716,10 @@ export function generatePiechartHtml(
         }
 
         new Chartkick.PieChart("chart", pieData, {
+          adapter: "highcharts",
           library: {
+            height: null,
+            animation: false,
             chart: {
               type: "pie",
               animation: false,
@@ -775,7 +796,10 @@ export function generateTableHtml(
         }
 
         new Chartkick.ColumnChart("chart", seriesData, {
+          adapter: "highcharts",
           library: {
+            height: null,
+            animation: false,
             chart: {
               type: "column",
               animation: false,
