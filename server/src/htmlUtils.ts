@@ -54,6 +54,8 @@ function generateBaseHtmlTemplate(title: string, chartContent: string): string {
       <script src="https://code.highcharts.com/highcharts.js"></script>
       <script src="https://code.highcharts.com/highcharts-more.js"></script>
       <script src="https://code.highcharts.com/modules/pattern-fill.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chartkick/4.1.1/chartkick.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chartkick/4.1.1/chartkick.highcharts.min.js"></script>
 
         <div class="layout">
           <div id="chart" class="w--full h--64"></div>
@@ -84,62 +86,59 @@ export function generateStatHtml(
   const chartContent = `
         var chartData = ${JSON.stringify(chartData)};
 
-        // Stat panel configuration using Highcharts
-        Highcharts.chart("chart", {
-          chart: {
-            type: "line",
-            animation: false,
-            backgroundColor: "transparent"
-          },
-          title: {
-            text: null
-          },
-          xAxis: {
-            visible: false
-          },
-          yAxis: {
-            visible: false
-          },
-          legend: {
-            enabled: false
-          },
-          plotOptions: {
-            series: {
+        // Stat panel rendering using Chartkick with Highcharts adapter
+        new Chartkick.LineChart("chart", [[1, chartData.value]], {
+          library: {
+            chart: {
+              type: "line",
               animation: false,
-              enableMouseTracking: false,
-              states: {
-                hover: {
-                  enabled: false
-                }
-              }
-            }
-          },
-          series: [{
-            data: [0],
-            showInLegend: false,
-            marker: {
+              backgroundColor: "transparent"
+            },
+            title: {
+              text: null
+            },
+            xAxis: {
+              visible: false
+            },
+            yAxis: {
+              visible: false
+            },
+            legend: {
               enabled: false
             },
-            lineWidth: 0,
-            dataLabels: {
-              enabled: true,
-              formatter: function() {
-                return chartData.formatted;
-              },
-              style: {
-                fontSize: "120px",
-                fontWeight: "bold",
-                color: "#000000",
-                textOutline: "none"
-              },
-              x: 0,
-              y: 0,
-              verticalAlign: "middle",
-              align: "center"
+            plotOptions: {
+              line: {
+                animation: false,
+                enableMouseTracking: false,
+                states: {
+                  hover: {
+                    enabled: false
+                  }
+                },
+                marker: {
+                  enabled: false
+                },
+                dataLabels: {
+                  enabled: true,
+                  formatter: function() {
+                    return chartData.formatted;
+                  },
+                  style: {
+                    fontSize: "120px",
+                    fontWeight: "bold",
+                    color: "#000000",
+                    textOutline: "none"
+                  },
+                  x: 0,
+                  y: 0,
+                  verticalAlign: "middle",
+                  align: "center"
+                }
+              }
+            },
+            credits: {
+              enabled: false
             }
-          }],
-          credits: {
-            enabled: false
           }
         });
     `;
@@ -159,84 +158,86 @@ export function generateGaugeHtml(
   const chartContent = `
         var chartData = ${JSON.stringify(chartData)};
 
-        // Gauge chart configuration
-        Highcharts.chart("chart", {
-          chart: {
-            type: "gauge",
-            animation: false,
-            spacing: [10, 10, 5, 10]
-          },
-          title: {
-            text: null
-          },
-          pane: {
-            startAngle: -150,
-            endAngle: 150,
-            background: {
-              backgroundColor: "transparent",
-              borderWidth: 0
-            }
-          },
-          plotOptions: {
-            gauge: {
+        // Gauge panel rendering using Chartkick with Highcharts adapter
+        new Chartkick.LineChart("chart", [[1, chartData.value]], {
+          library: {
+            chart: {
+              type: "gauge",
               animation: false,
-              pivot: {
-                backgroundColor: "transparent"
-              },
-              dial: {
-                backgroundColor: "transparent",
-                baseWidth: 0
-              }
-            }
-          },
-          yAxis: {
-            min: 0,
-            max: 100,
-            minorTickInterval: 0,
-            tickColor: "#000000",
-            tickLength: 40,
-            tickPixelInterval: 40,
-            tickWidth: 2,
-            lineWidth: 0,
+              spacing: [10, 10, 5, 10]
+            },
             title: {
               text: null
             },
-            labels: {
-              distance: 15,
-              style: {
-                fontSize: "16px",
-                color: "#000000"
+            pane: {
+              startAngle: -150,
+              endAngle: 150,
+              background: {
+                backgroundColor: "transparent",
+                borderWidth: 0
               }
             },
-            plotBands: [{
-              from: 1,
-              to: chartData.value,
-              color: "#666666",
-              innerRadius: "82%",
-              borderRadius: "50%"
-            }, {
-              from: chartData.value + 1,
-              to: 100,
-              color: "#CCCCCC",
-              innerRadius: "82%",
-              borderRadius: "50%"
-            }]
-          },
-          series: [{
-            name: "Value",
-            data: [chartData.value],
-            dataLabels: {
-              format: "{point.y:.2f}",
-              borderWidth: 0,
-              style: {
-                fontSize: "2em",
-                fontWeight: "400",
-                color: "#000000"
+            plotOptions: {
+              gauge: {
+                animation: false,
+                pivot: {
+                  backgroundColor: "transparent"
+                },
+                dial: {
+                  backgroundColor: "transparent",
+                  baseWidth: 0
+                }
               }
+            },
+            yAxis: {
+              min: 0,
+              max: 100,
+              minorTickInterval: 0,
+              tickColor: "#000000",
+              tickLength: 40,
+              tickPixelInterval: 40,
+              tickWidth: 2,
+              lineWidth: 0,
+              title: {
+                text: null
+              },
+              labels: {
+                distance: 15,
+                style: {
+                  fontSize: "16px",
+                  color: "#000000"
+                }
+              },
+              plotBands: [{
+                from: 1,
+                to: chartData.value,
+                color: "#666666",
+                innerRadius: "82%",
+                borderRadius: "50%"
+              }, {
+                from: chartData.value + 1,
+                to: 100,
+                color: "#CCCCCC",
+                innerRadius: "82%",
+                borderRadius: "50%"
+              }]
+            },
+            series: [{
+              name: "Value",
+              data: [chartData.value],
+              dataLabels: {
+                format: "{point.y:.2f}",
+                borderWidth: 0,
+                style: {
+                  fontSize: "2em",
+                  fontWeight: "400",
+                  color: "#000000"
+                }
+              }
+            }],
+            credits: {
+              enabled: false
             }
-          }],
-          credits: {
-            enabled: false
           }
         });
     `;
@@ -290,75 +291,76 @@ export function generateTimeseriesHtml(
     const chartContent = `
             var chartData = ${JSON.stringify(chartData)};
 
-            // Multi-series Highcharts configuration with pattern fills
-            Highcharts.chart("chart", {
-              chart: {
-                type: "spline",
-                animation: false,
-                spacing: [10, 10, 5, 10],
-                height: 203
-              },
-              title: {
-                text: null
-              },
-              plotOptions: {
-                series: {
+            // Multi-series timeseries rendered with Chartkick + Highcharts adapter
+            new Chartkick.LineChart("chart", chartData, {
+              library: {
+                chart: {
+                  type: "spline",
                   animation: false,
-                  enableMouseTracking: false,
-                  states: {
-                    hover: { enabled: false }
-                  },
-                  marker: {
-                    enabled: false
+                  spacing: [10, 10, 5, 10],
+                  height: 203
+                },
+                title: {
+                  text: null
+                },
+                plotOptions: {
+                  line: {
+                    animation: false,
+                    enableMouseTracking: false,
+                    states: {
+                      hover: { enabled: false }
+                    },
+                    marker: {
+                      enabled: false
+                    }
                   }
-                }
-              },
-              series: chartData,
-              tooltip: {
-                enabled: false
-              },
-              legend: {
-                enabled: true,
-                align: "left",
-                verticalAlign: "top",
-                layout: "horizontal",
-                itemStyle: {
-                  fontSize: "14px",
-                  color: "#000000"
-                }
-              },
-              yAxis: {
-                labels: {
-                  style: { fontSize: "16px", color: "#000000" }
                 },
-                gridLineDashStyle: "shortdot",
-                gridLineWidth: 1,
-                gridLineColor: "#000000",
-                tickAmount: 5,
-                title: {
-                  text: null
-                }
-              },
-              xAxis: {
-                type: "datetime",
-                labels: {
-                  style: { fontSize: "16px", color: "#000000" },
-                  padding: 5,
-                  y: 25
+                tooltip: {
+                  enabled: false
                 },
-                lineWidth: 0,
-                gridLineDashStyle: "dot",
-                tickWidth: 1,
-                tickLength: 0,
-                gridLineWidth: 1,
-                gridLineColor: "#000000",
-                tickPixelInterval: 120,
-                title: {
-                  text: null
+                legend: {
+                  enabled: true,
+                  align: "left",
+                  verticalAlign: "top",
+                  layout: "horizontal",
+                  itemStyle: {
+                    fontSize: "14px",
+                    color: "#000000"
+                  }
+                },
+                yAxis: {
+                  labels: {
+                    style: { fontSize: "16px", color: "#000000" }
+                  },
+                  gridLineDashStyle: "shortdot",
+                  gridLineWidth: 1,
+                  gridLineColor: "#000000",
+                  tickAmount: 5,
+                  title: {
+                    text: null
+                  }
+                },
+                xAxis: {
+                  type: "datetime",
+                  labels: {
+                    style: { fontSize: "16px", color: "#000000" },
+                    padding: 5,
+                    y: 25
+                  },
+                  lineWidth: 0,
+                  gridLineDashStyle: "dot",
+                  tickWidth: 1,
+                  tickLength: 0,
+                  gridLineWidth: 1,
+                  gridLineColor: "#000000",
+                  tickPixelInterval: 120,
+                  title: {
+                    text: null
+                  }
+                },
+                credits: {
+                  enabled: false
                 }
-              },
-              credits: {
-                enabled: false
               }
             });
         `;
@@ -373,73 +375,69 @@ export function generateTimeseriesHtml(
   const chartContent = `
             var chartData = ${JSON.stringify(chartData)};
 
-            // Single series Highcharts configuration
-            Highcharts.chart("chart", {
-              chart: {
-                type: "spline",
-                animation: false,
-                spacing: [10, 10, 5, 10],
-                height: 203
-              },
-              title: {
-                text: null
-              },
-              plotOptions: {
-                series: {
+            // Single series timeseries rendered with Chartkick + Highcharts adapter
+            new Chartkick.LineChart("chart", chartData, {
+              library: {
+                chart: {
+                  type: "spline",
                   animation: false,
-                  enableMouseTracking: false,
-                  states: {
-                    hover: { enabled: false }
-                  },
-                  marker: {
-                    enabled: false
+                  spacing: [10, 10, 5, 10],
+                  height: 203
+                },
+                title: {
+                  text: null
+                },
+                plotOptions: {
+                  line: {
+                    animation: false,
+                    enableMouseTracking: false,
+                    states: {
+                      hover: { enabled: false }
+                    },
+                    marker: {
+                      enabled: false
+                    }
                   }
-                }
-              },
-              series: [{
-                name: "Data",
-                data: chartData,
-                lineWidth: 4,
-                color: "#000000"
-              }],
-              tooltip: {
-                enabled: false
-              },
-              legend: {
-                enabled: false
-              },
-              yAxis: {
-                labels: {
-                  style: { fontSize: "16px", color: "#000000" }
                 },
-                gridLineDashStyle: "shortdot",
-                gridLineWidth: 1,
-                gridLineColor: "#000000",
-                tickAmount: 5,
-                title: {
-                  text: null
-                }
-              },
-              xAxis: {
-                type: "datetime",
-                labels: {
-                  style: { fontSize: "16px", color: "#000000" },
-                  padding: 5,
-                  y: 25
+                tooltip: {
+                  enabled: false
                 },
-                lineWidth: 0,
-                gridLineDashStyle: "dot",
-                tickWidth: 1,
-                tickLength: 0,
-                gridLineWidth: 1,
-                gridLineColor: "#000000",
-                tickPixelInterval: 120,
-                title: {
-                  text: null
+                legend: {
+                  enabled: false
+                },
+                yAxis: {
+                  labels: {
+                    style: { fontSize: "16px", color: "#000000" }
+                  },
+                  gridLineDashStyle: "shortdot",
+                  gridLineWidth: 1,
+                  gridLineColor: "#000000",
+                  tickAmount: 5,
+                  title: {
+                    text: null
+                  }
+                },
+                xAxis: {
+                  type: "datetime",
+                  labels: {
+                    style: { fontSize: "16px", color: "#000000" },
+                    padding: 5,
+                    y: 25
+                  },
+                  lineWidth: 0,
+                  gridLineDashStyle: "dot",
+                  tickWidth: 1,
+                  tickLength: 0,
+                  gridLineWidth: 1,
+                  gridLineColor: "#000000",
+                  tickPixelInterval: 120,
+                  title: {
+                    text: null
+                  }
+                },
+                credits: {
+                  enabled: false
                 }
-              },
-              credits: {
-                enabled: false
               }
             });
         `;
@@ -484,67 +482,68 @@ export function generateBarGaugeHtml(
     const chartContent = `
             var chartData = ${JSON.stringify(seriesConfig)};
 
-            // Multi-series Bar chart Highcharts configuration with pattern fills
-            Highcharts.chart("chart", {
-              chart: {
-                type: "column",
-                animation: false,
-                spacing: [10, 10, 5, 10]
-              },
-              title: {
-                text: null
-              },
-              plotOptions: {
-                series: {
+            // Multi-series bar gauge rendered with Chartkick + Highcharts adapter
+            new Chartkick.ColumnChart("chart", chartData, {
+              library: {
+                chart: {
+                  type: "column",
                   animation: false,
-                  enableMouseTracking: false,
-                  states: {
-                    hover: { enabled: false }
+                  spacing: [10, 10, 5, 10]
+                },
+                title: {
+                  text: null
+                },
+                plotOptions: {
+                  column: {
+                    animation: false,
+                    enableMouseTracking: false,
+                    states: {
+                      hover: { enabled: false }
+                    }
                   }
-                }
-              },
-              series: chartData,
-              tooltip: {
-                enabled: false
-              },
-              legend: {
-                enabled: true,
-                align: "left",
-                verticalAlign: "top",
-                layout: "horizontal",
-                itemStyle: {
-                  fontSize: "14px",
-                  color: "#000000"
-                }
-              },
-              yAxis: {
-                labels: {
-                  style: { fontSize: "16px", color: "#000000" }
                 },
-                gridLineDashStyle: "shortdot",
-                gridLineWidth: 1,
-                gridLineColor: "#000000",
-                tickAmount: 5,
-                title: {
-                  text: null
-                }
-              },
-              xAxis: {
-                labels: {
-                  style: { fontSize: "16px", color: "#000000" }
+                tooltip: {
+                  enabled: false
                 },
-                lineWidth: 0,
-                gridLineDashStyle: "dot",
-                tickWidth: 1,
-                tickLength: 0,
-                gridLineWidth: 1,
-                gridLineColor: "#000000",
-                title: {
-                  text: null
+                legend: {
+                  enabled: true,
+                  align: "left",
+                  verticalAlign: "top",
+                  layout: "horizontal",
+                  itemStyle: {
+                    fontSize: "14px",
+                    color: "#000000"
+                  }
+                },
+                yAxis: {
+                  labels: {
+                    style: { fontSize: "16px", color: "#000000" }
+                  },
+                  gridLineDashStyle: "shortdot",
+                  gridLineWidth: 1,
+                  gridLineColor: "#000000",
+                  tickAmount: 5,
+                  title: {
+                    text: null
+                  }
+                },
+                xAxis: {
+                  labels: {
+                    style: { fontSize: "16px", color: "#000000" }
+                  },
+                  lineWidth: 0,
+                  gridLineDashStyle: "dot",
+                  tickWidth: 1,
+                  tickLength: 0,
+                  gridLineWidth: 1,
+                  gridLineColor: "#000000",
+                  title: {
+                    text: null
+                  }
+                },
+                credits: {
+                  enabled: false
                 }
-              },
-              credits: {
-                enabled: false
               }
             });
         `;
@@ -559,74 +558,73 @@ export function generateBarGaugeHtml(
   const chartContent = `
             var chartData = ${JSON.stringify(chartData)};
 
-            // Convert data to Highcharts format
+            // Convert data to chart format for Chartkick
             var seriesData = [];
             if (Array.isArray(chartData)) {
               seriesData = chartData;
             } else {
               for (var key in chartData) {
-                seriesData.push([key, chartData[key]]);
+                if (Object.prototype.hasOwnProperty.call(chartData, key)) {
+                  seriesData.push([key, chartData[key]]);
+                }
               }
             }
 
-            // Single series Bar chart Highcharts configuration
-            Highcharts.chart("chart", {
-              chart: {
-                type: "column",
-                animation: false,
-                spacing: [10, 10, 5, 10]
-              },
-              title: {
-                text: null
-              },
-              plotOptions: {
-                series: {
+            // Single series bar gauge rendered with Chartkick + Highcharts adapter
+            new Chartkick.ColumnChart("chart", seriesData, {
+              library: {
+                chart: {
+                  type: "column",
                   animation: false,
-                  enableMouseTracking: false,
-                  states: {
-                    hover: { enabled: false }
+                  spacing: [10, 10, 5, 10]
+                },
+                title: {
+                  text: null
+                },
+                plotOptions: {
+                  column: {
+                    animation: false,
+                    enableMouseTracking: false,
+                    states: {
+                      hover: { enabled: false }
+                    }
                   }
-                }
-              },
-              series: [{
-                name: "Data",
-                data: seriesData,
-                color: "#000000"
-              }],
-              tooltip: {
-                enabled: false
-              },
-              legend: {
-                enabled: false
-              },
-              yAxis: {
-                labels: {
-                  style: { fontSize: "16px", color: "#000000" }
                 },
-                gridLineDashStyle: "shortdot",
-                gridLineWidth: 1,
-                gridLineColor: "#000000",
-                tickAmount: 5,
-                title: {
-                  text: null
-                }
-              },
-              xAxis: {
-                labels: {
-                  style: { fontSize: "16px", color: "#000000" }
+                tooltip: {
+                  enabled: false
                 },
-                lineWidth: 0,
-                gridLineDashStyle: "dot",
-                tickWidth: 1,
-                tickLength: 0,
-                gridLineWidth: 1,
-                gridLineColor: "#000000",
-                title: {
-                  text: null
+                legend: {
+                  enabled: false
+                },
+                yAxis: {
+                  labels: {
+                    style: { fontSize: "16px", color: "#000000" }
+                  },
+                  gridLineDashStyle: "shortdot",
+                  gridLineWidth: 1,
+                  gridLineColor: "#000000",
+                  tickAmount: 5,
+                  title: {
+                    text: null
+                  }
+                },
+                xAxis: {
+                  labels: {
+                    style: { fontSize: "16px", color: "#000000" }
+                  },
+                  lineWidth: 0,
+                  gridLineDashStyle: "dot",
+                  tickWidth: 1,
+                  tickLength: 0,
+                  gridLineWidth: 1,
+                  gridLineColor: "#000000",
+                  title: {
+                    text: null
+                  }
+                },
+                credits: {
+                  enabled: false
                 }
-              },
-              credits: {
-                enabled: false
               }
             });
         `;
@@ -700,56 +698,54 @@ export function generatePiechartHtml(
           }
         }
 
-        Highcharts.chart("chart", {
-          chart: {
-            type: "pie",
-            animation: false,
-            spacing: [10, 10, 5, 10]
-          },
-          title: {
-            text: null
-          },
-          plotOptions: {
-            pie: {
+        new Chartkick.PieChart("chart", pieData, {
+          library: {
+            chart: {
+              type: "pie",
               animation: false,
-              enableMouseTracking: false,
-              states: {
-                hover: { enabled: false }
-              },
-              dataLabels: {
-                enabled: true,
-                distance: 30,
-                style: {
-                  fontSize: "14px",
-                  color: "#000000",
-                  fontWeight: "400"
+              spacing: [10, 10, 5, 10]
+            },
+            title: {
+              text: null
+            },
+            plotOptions: {
+              pie: {
+                animation: false,
+                enableMouseTracking: false,
+                states: {
+                  hover: { enabled: false }
                 },
-                formatter: function() {
-                  return this.point.name + ": " + Highcharts.numberFormat(this.percentage, 1) + "%";
+                dataLabels: {
+                  enabled: true,
+                  distance: 30,
+                  style: {
+                    fontSize: "14px",
+                    color: "#000000",
+                    fontWeight: "400"
+                  },
+                  formatter: function() {
+                    return this.point.name + ": " + Highcharts.numberFormat(this.percentage, 1) + "%";
+                  },
+                  connectorStyle: {
+                    color: "#000000",
+                    width: 1
+                  }
                 },
-                connectorStyle: {
-                  color: "#000000",
-                  width: 1
-                }
-              },
-              showInLegend: false,
-              borderWidth: 0,
-              innerSize: 0,
-              size: "85%"
+                showInLegend: false,
+                borderWidth: 0,
+                innerSize: 0,
+                size: "85%"
+              }
+            },
+            tooltip: {
+              enabled: false
+            },
+            legend: {
+              enabled: false
+            },
+            credits: {
+              enabled: false
             }
-          },
-          series: [{
-            name: "Data",
-            data: pieData
-          }],
-          tooltip: {
-            enabled: false
-          },
-          legend: {
-            enabled: false
-          },
-          credits: {
-            enabled: false
           }
         });
     `;
@@ -773,67 +769,66 @@ export function generateTableHtml(
           seriesData = chartData;
         } else {
           for (var key in chartData) {
-            seriesData.push([key, chartData[key]]);
+            if (Object.prototype.hasOwnProperty.call(chartData, key)) {
+              seriesData.push([key, chartData[key]]);
+            }
           }
         }
 
-        Highcharts.chart("chart", {
-          chart: {
-            type: "column",
-            animation: false,
-            spacing: [10, 10, 5, 10]
-          },
-          title: {
-            text: null
-          },
-          plotOptions: {
-            series: {
+        new Chartkick.ColumnChart("chart", seriesData, {
+          library: {
+            chart: {
+              type: "column",
               animation: false,
-              enableMouseTracking: false,
-              states: {
-                hover: { enabled: false }
+              spacing: [10, 10, 5, 10]
+            },
+            title: {
+              text: null
+            },
+            plotOptions: {
+              column: {
+                animation: false,
+                enableMouseTracking: false,
+                states: {
+                  hover: { enabled: false }
+                }
               }
-            }
-          },
-          series: [{
-            name: "Data",
-            data: seriesData,
-            color: "#000000"
-          }],
-          tooltip: {
-            enabled: false
-          },
-          legend: {
-            enabled: false
-          },
-          yAxis: {
-            labels: {
-              style: { fontSize: "16px", color: "#000000" }
             },
-            gridLineDashStyle: "shortdot",
-            gridLineWidth: 1,
-            gridLineColor: "#000000",
-            tickAmount: 5,
-            title: {
-              text: null
-            }
-          },
-          xAxis: {
-            labels: {
-              style: { fontSize: "16px", color: "#000000" }
+            tooltip: {
+              enabled: false
             },
-            lineWidth: 0,
-            gridLineDashStyle: "dot",
-            tickWidth: 1,
-            tickLength: 0,
-            gridLineWidth: 1,
-            gridLineColor: "#000000",
-            title: {
-              text: null
+            legend: {
+              enabled: false
+            },
+            yAxis: {
+              labels: {
+                style: { fontSize: "16px", color: "#000000" }
+              },
+              gridLineDashStyle: "shortdot",
+              gridLineWidth: 1,
+              gridLineColor: "#000000",
+              tickAmount: 5,
+              title: {
+                text: null
+              }
+            },
+            xAxis: {
+              labels: {
+                style: { fontSize: "16px", color: "#000000" }
+              },
+              lineWidth: 0,
+              gridLineDashStyle: "dot",
+              tickWidth: 1,
+              tickLength: 0,
+              gridLineWidth: 1,
+              gridLineColor: "#000000",
+              title: {
+                text: null
+              }
+            },
+            credits: {
+              enabled: false
             }
-          },
-          credits: {
-            enabled: false
           }
         });
     `;
