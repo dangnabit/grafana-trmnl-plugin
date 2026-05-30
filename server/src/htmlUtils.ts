@@ -92,7 +92,7 @@ export function generateStatHtml(
         var chartData = ${JSON.stringify(chartData)};
 
         // Stat panel rendering using Chartkick with Highcharts adapter
-        var createCharte = function() {
+        var createChart = function() {
         new Chartkick.LineChart("chart", [[1, chartData.value]], {
           adapter: "highcharts",
            prefix: "",
@@ -173,7 +173,7 @@ export function generateGaugeHtml(
         var chartData = ${JSON.stringify(chartData)};
 
         // Gauge panel rendering using Chartkick with Highcharts adapter
-        var createCharte = function() {
+        var createChart = function() {
         new Chartkick.LineChart("chart", [[1, chartData.value]], {
           adapter: "highcharts",
            prefix: "",
@@ -315,7 +315,7 @@ export function generateTimeseriesHtml(
             var chartData = ${JSON.stringify(chartData)};
 
             // Multi-series timeseries rendered with Chartkick + Highcharts adapter
-            var createCharte = function() {
+            var createChart = function() {
             new Chartkick.LineChart("chart", chartData, {
               adapter: "highcharts",
                prefix: "",
@@ -408,7 +408,7 @@ export function generateTimeseriesHtml(
             var chartData = ${JSON.stringify(chartData)};
 
             // Single series timeseries rendered with Chartkick + Highcharts adapter
-            var createCharte = function() {
+            var createChart = function() {
             new Chartkick.LineChart("chart", chartData, {
               adapter: "highcharts",
                prefix: "",
@@ -526,7 +526,7 @@ export function generateBarGaugeHtml(
             var chartData = ${JSON.stringify(seriesConfig)};
 
             // Multi-series bar gauge rendered with Chartkick + Highcharts adapter
-            var createCharte = function() {
+            var createChart = function() {
             new Chartkick.ColumnChart("chart", chartData, {
               adapter: "highcharts",
                prefix: "",
@@ -623,7 +623,7 @@ export function generateBarGaugeHtml(
             }
 
             // Single series bar gauge rendered with Chartkick + Highcharts adapter
-            var createCharte = function() {
+            var createChart = function() {
             new Chartkick.ColumnChart("chart", seriesData, {
               adapter: "highcharts",
                prefix: "",
@@ -759,7 +759,7 @@ export function generatePiechartHtml(
           }
         }
 
-        var createCharte = function() {
+        var createChart = function() {
         new Chartkick.PieChart("chart", pieData, {
           adapter: "highcharts",
            prefix: "",
@@ -845,7 +845,7 @@ export function generateTableHtml(
           }
         }
 
-        var createCharte = function() {
+        var createChart = function() {
         new Chartkick.ColumnChart("chart", seriesData, {
           adapter: "highcharts",
            prefix: "",
