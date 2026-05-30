@@ -66,6 +66,12 @@ function generateBaseHtmlTemplate(title: string, chartContent: string): string {
 
       <script>
         ${chartContent}
+          // ensure your chart loads before plugin render is generated
+  if ("Chartkick" in window) {
+    createChart();
+  } else {
+    window.addEventListener("chartkick:load", createChart, true);
+  }
       </script>
     `;
 }
@@ -86,12 +92,18 @@ export function generateStatHtml(
         var chartData = ${JSON.stringify(chartData)};
 
         // Stat panel rendering using Chartkick with Highcharts adapter
+        var createCharte = function() {
         new Chartkick.LineChart("chart", [[1, chartData.value]], {
           adapter: "highcharts",
+           prefix: "",
+              thousands: ",",
+              points: false,
+              colors: ["black"],
+              curve: true,
           library: {
-            height: null,
             animation: false,
             chart: {
+              height: null,
               type: "line",
               animation: false,
               backgroundColor: "transparent"
@@ -161,12 +173,18 @@ export function generateGaugeHtml(
         var chartData = ${JSON.stringify(chartData)};
 
         // Gauge panel rendering using Chartkick with Highcharts adapter
+        var createCharte = function() {
         new Chartkick.LineChart("chart", [[1, chartData.value]], {
           adapter: "highcharts",
+           prefix: "",
+              thousands: ",",
+              points: false,
+              colors: ["black"],
+              curve: true,
           library: {
-            height: null,
             animation: false,
             chart: {
+              height: null,
               type: "gauge",
               animation: false,
               spacing: [10, 10, 5, 10]
@@ -297,12 +315,18 @@ export function generateTimeseriesHtml(
             var chartData = ${JSON.stringify(chartData)};
 
             // Multi-series timeseries rendered with Chartkick + Highcharts adapter
+            var createCharte = function() {
             new Chartkick.LineChart("chart", chartData, {
               adapter: "highcharts",
+               prefix: "",
+              thousands: ",",
+              points: false,
+              colors: ["black"],
+              curve: true,
               library: {
-                height: null,
                 animation: false,
                 chart: {
+                  height: null,
                   type: "spline",
                   animation: false,
                   spacing: [10, 10, 5, 10],
@@ -384,12 +408,18 @@ export function generateTimeseriesHtml(
             var chartData = ${JSON.stringify(chartData)};
 
             // Single series timeseries rendered with Chartkick + Highcharts adapter
+            var createCharte = function() {
             new Chartkick.LineChart("chart", chartData, {
               adapter: "highcharts",
+               prefix: "",
+              thousands: ",",
+              points: false,
+              colors: ["black"],
+              curve: true,
               library: {
-                height: null,
                 animation: false,
                 chart: {
+                  height: null,
                   type: "spline",
                   animation: false,
                   spacing: [10, 10, 5, 10],
@@ -451,6 +481,8 @@ export function generateTimeseriesHtml(
                 }
               }
             });
+}
+
         `;
 
   return generateBaseHtmlTemplate(title, chartContent);
@@ -494,12 +526,18 @@ export function generateBarGaugeHtml(
             var chartData = ${JSON.stringify(seriesConfig)};
 
             // Multi-series bar gauge rendered with Chartkick + Highcharts adapter
+            var createCharte = function() {
             new Chartkick.ColumnChart("chart", chartData, {
               adapter: "highcharts",
+               prefix: "",
+              thousands: ",",
+              points: false,
+              colors: ["black"],
+              curve: true,
               library: {
-                height: null,
                 animation: false,
                 chart: {
+                  height: null,
                   type: "column",
                   animation: false,
                   spacing: [10, 10, 5, 10]
@@ -585,12 +623,18 @@ export function generateBarGaugeHtml(
             }
 
             // Single series bar gauge rendered with Chartkick + Highcharts adapter
+            var createCharte = function() {
             new Chartkick.ColumnChart("chart", seriesData, {
               adapter: "highcharts",
+               prefix: "",
+              thousands: ",",
+              points: false,
+              colors: ["black"],
+              curve: true,
               library: {
-                height: null,
                 animation: false,
                 chart: {
+                  height: null,
                   type: "column",
                   animation: false,
                   spacing: [10, 10, 5, 10]
@@ -715,12 +759,18 @@ export function generatePiechartHtml(
           }
         }
 
+        var createCharte = function() {
         new Chartkick.PieChart("chart", pieData, {
           adapter: "highcharts",
+           prefix: "",
+              thousands: ",",
+              points: false,
+              colors: ["black"],
+              curve: true,
           library: {
-            height: null,
             animation: false,
             chart: {
+              height: null,
               type: "pie",
               animation: false,
               spacing: [10, 10, 5, 10]
@@ -795,12 +845,18 @@ export function generateTableHtml(
           }
         }
 
+        var createCharte = function() {
         new Chartkick.ColumnChart("chart", seriesData, {
           adapter: "highcharts",
+           prefix: "",
+              thousands: ",",
+              points: false,
+              colors: ["black"],
+              curve: true,
           library: {
-            height: null,
             animation: false,
             chart: {
+              height: null,
               type: "column",
               animation: false,
               spacing: [10, 10, 5, 10]
