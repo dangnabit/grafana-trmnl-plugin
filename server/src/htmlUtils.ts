@@ -56,8 +56,8 @@ function generateBaseHtmlTemplate(title: string, chartContent: string): string {
       <script src="https://trmnl.com/js/highcharts/12.3.0/pattern-fill.js"></script>
       <script src="https://trmnl.com/js/chartkick/5.0.1/chartkick.min.js"></script>
 
-        <div class="layout">
-          <div id="chart" class="w--full h--64"></div>
+        <div class="layout layout--col gap--space-between">
+          <div id="chart" class="w--full"></div>
         </div>
         <div class="title_bar">
             ${GRAFANA_LOGO_SVG}
