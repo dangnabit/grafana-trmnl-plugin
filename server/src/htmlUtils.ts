@@ -57,6 +57,17 @@ function generateBaseHtmlTemplate(title: string, chartContent: string): string {
       <script src="https://trmnl.com/js/chartkick/5.0.1/chartkick.min.js"></script>
 
         <div class="layout layout--col gap--space-between">
+          <div class="item">
+            <div class="meta"></div>
+            <div class="content">
+              <span class="title title--small">Team Meeting</span>
+              <span class="description">Weekly team sync-up</span>
+              <div class="flex gap--small">
+                <span class="label label--small label--underline">9:00 AM - 10:00 AM</span>
+                <span class="label label--small label--underline">Confirmed</span>
+              </div>
+            </div>
+          </div>
           <div id="chart" class="w--full"></div>
         </div>
         <div class="title_bar">
