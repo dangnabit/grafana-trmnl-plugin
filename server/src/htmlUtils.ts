@@ -100,11 +100,9 @@ export function generateStatHtml(
               colors: ["black"],
               curve: true,
           library: {
-            animation: false,
             chart: {
               height: null,
               type: "line",
-              animation: false,
               backgroundColor: "transparent"
             },
             title: {
@@ -120,8 +118,10 @@ export function generateStatHtml(
               enabled: false
             },
             plotOptions: {
+                      series: {
+            animation: false,
+          },
               line: {
-                animation: false,
                 enableMouseTracking: false,
                 states: {
                   hover: {
@@ -180,11 +180,9 @@ export function generateGaugeHtml(
               colors: ["black"],
               curve: true,
           library: {
-            animation: false,
             chart: {
               height: null,
               type: "gauge",
-              animation: false,
               spacing: [10, 10, 5, 10]
             },
             title: {
@@ -199,8 +197,10 @@ export function generateGaugeHtml(
               }
             },
             plotOptions: {
+                      series: {
+            animation: false,
+          },
               gauge: {
-                animation: false,
                 pivot: {
                   backgroundColor: "transparent"
                 },
@@ -321,19 +321,19 @@ export function generateTimeseriesHtml(
               colors: ["black"],
               curve: true,
               library: {
-                animation: false,
                 chart: {
                   height: null,
                   type: "spline",
-                  animation: false,
                   spacing: [10, 10, 5, 10],
                 },
                 title: {
                   text: null
                 },
                 plotOptions: {
+                          series: {
+            animation: false,
+          },
                   line: {
-                    animation: false,
                     enableMouseTracking: false,
                     states: {
                       hover: { enabled: false }
@@ -412,19 +412,19 @@ export function generateTimeseriesHtml(
               colors: ["black"],
               curve: true,
               library: {
-                animation: false,
                 chart: {
                   height: null,
                   type: "spline",
-                  animation: false,
                   spacing: [10, 10, 5, 10],
                 },
                 title: {
                   text: null
                 },
                 plotOptions: {
+                          series: {
+            animation: false,
+          },
                   line: {
-                    animation: false,
                     enableMouseTracking: false,
                     states: {
                       hover: { enabled: false }
@@ -528,19 +528,19 @@ export function generateBarGaugeHtml(
               colors: ["black"],
               curve: true,
               library: {
-                animation: false,
                 chart: {
                   height: null,
                   type: "column",
-                  animation: false,
                   spacing: [10, 10, 5, 10]
                 },
                 title: {
                   text: null
                 },
                 plotOptions: {
+                          series: {
+            animation: false,
+          },
                   column: {
-                    animation: false,
                     enableMouseTracking: false,
                     states: {
                       hover: { enabled: false }
@@ -624,19 +624,19 @@ export function generateBarGaugeHtml(
               colors: ["black"],
               curve: true,
               library: {
-                animation: false,
                 chart: {
                   height: null,
                   type: "column",
-                  animation: false,
                   spacing: [10, 10, 5, 10]
                 },
                 title: {
                   text: null
                 },
                 plotOptions: {
+                          series: {
+            animation: false,
+          },
                   column: {
-                    animation: false,
                     enableMouseTracking: false,
                     states: {
                       hover: { enabled: false }
@@ -759,19 +759,19 @@ export function generatePiechartHtml(
               colors: ["black"],
               curve: true,
           library: {
-            animation: false,
             chart: {
               height: null,
               type: "pie",
-              animation: false,
               spacing: [10, 10, 5, 10]
             },
             title: {
               text: null
             },
             plotOptions: {
+                      series: {
+            animation: false,
+          },
               pie: {
-                animation: false,
                 enableMouseTracking: false,
                 states: {
                   hover: { enabled: false }
@@ -844,19 +844,19 @@ export function generateTableHtml(
               colors: ["black"],
               curve: true,
           library: {
-            animation: false,
             chart: {
               height: null,
               type: "column",
-              animation: false,
               spacing: [10, 10, 5, 10]
             },
             title: {
               text: null
             },
             plotOptions: {
+                      series: {
+            animation: false,
+          },
               column: {
-                animation: false,
                 enableMouseTracking: false,
                 states: {
                   hover: { enabled: false }
