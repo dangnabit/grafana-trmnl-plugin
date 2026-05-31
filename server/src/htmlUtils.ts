@@ -95,8 +95,7 @@ export function generateStatHtml(
         var createChart = function() {
         new Chartkick.LineChart("chart", [[1, chartData.value]], {
           adapter: "highcharts",
-           prefix: "",
-              thousands: ",",
+            thousands: ",",
               points: false,
               colors: ["black"],
               curve: true,
@@ -121,6 +120,8 @@ export function generateStatHtml(
               enabled: false
             },
             plotOptions: {
+            series: {
+            animation: false},
               line: {
                 animation: false,
                 enableMouseTracking: false,
@@ -176,7 +177,6 @@ export function generateGaugeHtml(
         var createChart = function() {
         new Chartkick.LineChart("chart", [[1, chartData.value]], {
           adapter: "highcharts",
-           prefix: "",
               thousands: ",",
               points: false,
               colors: ["black"],
@@ -201,6 +201,8 @@ export function generateGaugeHtml(
               }
             },
             plotOptions: {
+            series: {
+            animation: false},
               gauge: {
                 animation: false,
                 pivot: {
@@ -318,7 +320,6 @@ export function generateTimeseriesHtml(
             var createChart = function() {
             new Chartkick.LineChart("chart", chartData, {
               adapter: "highcharts",
-               prefix: "",
               thousands: ",",
               points: false,
               colors: ["black"],
@@ -336,6 +337,8 @@ export function generateTimeseriesHtml(
                   text: null
                 },
                 plotOptions: {
+                series: {
+                animation: false},
                   line: {
                     animation: false,
                     enableMouseTracking: false,
@@ -411,7 +414,6 @@ export function generateTimeseriesHtml(
             var createChart = function() {
             new Chartkick.LineChart("chart", chartData, {
               adapter: "highcharts",
-               prefix: "",
               thousands: ",",
               points: false,
               colors: ["black"],
@@ -529,7 +531,6 @@ export function generateBarGaugeHtml(
             var createChart = function() {
             new Chartkick.ColumnChart("chart", chartData, {
               adapter: "highcharts",
-               prefix: "",
               thousands: ",",
               points: false,
               colors: ["black"],
@@ -546,6 +547,8 @@ export function generateBarGaugeHtml(
                   text: null
                 },
                 plotOptions: {
+                series: {
+                animation: false},
                   column: {
                     animation: false,
                     enableMouseTracking: false,
@@ -626,7 +629,6 @@ export function generateBarGaugeHtml(
             var createChart = function() {
             new Chartkick.ColumnChart("chart", seriesData, {
               adapter: "highcharts",
-               prefix: "",
               thousands: ",",
               points: false,
               colors: ["black"],
@@ -643,6 +645,8 @@ export function generateBarGaugeHtml(
                   text: null
                 },
                 plotOptions: {
+                series: {
+                animation: false},
                   column: {
                     animation: false,
                     enableMouseTracking: false,
@@ -762,7 +766,6 @@ export function generatePiechartHtml(
         var createChart = function() {
         new Chartkick.PieChart("chart", pieData, {
           adapter: "highcharts",
-           prefix: "",
               thousands: ",",
               points: false,
               colors: ["black"],
@@ -779,6 +782,8 @@ export function generatePiechartHtml(
               text: null
             },
             plotOptions: {
+            series: {
+            animation: false},
               pie: {
                 animation: false,
                 enableMouseTracking: false,
@@ -848,7 +853,6 @@ export function generateTableHtml(
         var createChart = function() {
         new Chartkick.ColumnChart("chart", seriesData, {
           adapter: "highcharts",
-           prefix: "",
               thousands: ",",
               points: false,
               colors: ["black"],
@@ -865,6 +869,8 @@ export function generateTableHtml(
               text: null
             },
             plotOptions: {
+            series: {
+            animation: false},
               column: {
                 animation: false,
                 enableMouseTracking: false,
