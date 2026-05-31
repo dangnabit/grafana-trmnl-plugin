@@ -327,7 +327,6 @@ export function generateTimeseriesHtml(
                   type: "spline",
                   animation: false,
                   spacing: [10, 10, 5, 10],
-                  height: 203
                 },
                 title: {
                   text: null
@@ -419,7 +418,6 @@ export function generateTimeseriesHtml(
                   type: "spline",
                   animation: false,
                   spacing: [10, 10, 5, 10],
-                  height: 203
                 },
                 title: {
                   text: null
