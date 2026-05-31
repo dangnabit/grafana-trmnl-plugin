@@ -120,8 +120,6 @@ export function generateStatHtml(
               enabled: false
             },
             plotOptions: {
-            series: {
-            animation: false},
               line: {
                 animation: false,
                 enableMouseTracking: false,
@@ -201,8 +199,6 @@ export function generateGaugeHtml(
               }
             },
             plotOptions: {
-            series: {
-            animation: false},
               gauge: {
                 animation: false,
                 pivot: {
@@ -337,8 +333,6 @@ export function generateTimeseriesHtml(
                   text: null
                 },
                 plotOptions: {
-                series: {
-                animation: false},
                   line: {
                     animation: false,
                     enableMouseTracking: false,
@@ -547,8 +541,6 @@ export function generateBarGaugeHtml(
                   text: null
                 },
                 plotOptions: {
-                series: {
-                animation: false},
                   column: {
                     animation: false,
                     enableMouseTracking: false,
@@ -645,8 +637,6 @@ export function generateBarGaugeHtml(
                   text: null
                 },
                 plotOptions: {
-                series: {
-                animation: false},
                   column: {
                     animation: false,
                     enableMouseTracking: false,
@@ -782,8 +772,6 @@ export function generatePiechartHtml(
               text: null
             },
             plotOptions: {
-            series: {
-            animation: false},
               pie: {
                 animation: false,
                 enableMouseTracking: false,
@@ -869,8 +857,6 @@ export function generateTableHtml(
               text: null
             },
             plotOptions: {
-            series: {
-            animation: false},
               column: {
                 animation: false,
                 enableMouseTracking: false,
