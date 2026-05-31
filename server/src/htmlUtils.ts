@@ -390,7 +390,7 @@ export function generateTimeseriesHtml(
                   enabled: false
                 }
               }
-            });
+            });}
         `;
 
     return generateBaseHtmlTemplate(title, chartContent);
@@ -590,7 +590,7 @@ export function generateBarGaugeHtml(
                   enabled: false
                 }
               }
-            });
+            });}
         `;
 
     return generateBaseHtmlTemplate(title, chartContent);
@@ -679,7 +679,7 @@ export function generateBarGaugeHtml(
                   enabled: false
                 }
               }
-            });
+            });}
         `;
 
   return generateBaseHtmlTemplate(title, chartContent);
@@ -808,7 +808,7 @@ export function generatePiechartHtml(
               enabled: false
             }
           }
-        });
+        });}
     `;
 
   return generateBaseHtmlTemplate(title, chartContent);
@@ -899,7 +899,7 @@ export function generateTableHtml(
               enabled: false
             }
           }
-        });
+        });}
     `;
 
   return generateBaseHtmlTemplate(title, chartContent);
