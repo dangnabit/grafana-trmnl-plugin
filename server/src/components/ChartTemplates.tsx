@@ -11,11 +11,10 @@ export function BaseTemplate({
 }) {
   return (
     <>
-      <script src="https://code.highcharts.com/highcharts.js"></script>
-      <script src="https://code.highcharts.com/highcharts-more.js"></script>
-      <script src="https://code.highcharts.com/modules/pattern-fill.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chartkick/4.1.1/chartkick.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chartkick/4.1.1/chartkick.highcharts.min.js"></script>
+      <script src="https://trmnl.com/js/highcharts/12.3.0/highcharts.js"></script>
+      <script src="https://trmnl.com/js/highcharts/12.3.0/highcharts-more.js"></script>
+      <script src="https://trmnl.com/js/highcharts/12.3.0/pattern-fill.js"></script>
+      <script src="https://trmnl.com/js/chartkick/5.0.1/chartkick.min.js"></script>
 
       <div className="layout">
         <div id="chart" className="w--full h--64"></div>
