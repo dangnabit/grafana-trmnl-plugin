@@ -105,7 +105,7 @@ function formatSumValue(
     if (isNaN(numValue)) {
       return String(value);
     }
-    return `$${numValue}`;
+    return `$${Math.round(numValue * 100) / 100}`;
   }
   if (param === 'percentage') {
     const numValue = typeof value === 'number' ? value : Number(value);
