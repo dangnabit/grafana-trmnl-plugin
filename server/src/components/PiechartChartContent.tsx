@@ -1,4 +1,49 @@
 import React from 'react';
+import { Options } from 'highcharts';
+
+const options: Options = {
+  chart: {
+    height: null,
+    type: 'pie',
+    spacing: [10, 10, 5, 10],
+  },
+  title: {
+    text: '',
+  },
+  plotOptions: {
+    series: {
+      animation: false,
+    },
+    pie: {
+      enableMouseTracking: false,
+      states: {
+        hover: { enabled: false },
+      },
+      dataLabels: {
+        enabled: true,
+        distance: 30,
+        style: {
+          fontSize: '14px',
+          color: '#000000',
+          fontWeight: '400',
+        },
+      },
+      showInLegend: false,
+      borderWidth: 0,
+      innerSize: 0,
+      size: '85%',
+    },
+  },
+  tooltip: {
+    enabled: false,
+  },
+  legend: {
+    enabled: false,
+  },
+  credits: {
+    enabled: false,
+  },
+};
 
 export function PiechartChartContent({ chartData }: { chartData: any }) {
   const chartScript = `
@@ -72,64 +117,15 @@ export function PiechartChartContent({ chartData }: { chartData: any }) {
           }
         }
 
-        var createChart = function() {
-        new Chartkick.PieChart("chart", pieData, {
-          adapter: "highcharts",
-              thousands: ",",
-              points: false,
-              colors: ["black"],
-              curve: true,
-          library: {
-            chart: {
-              height: null,
-              type: "pie",
-              spacing: [10, 10, 5, 10]
-            },
-            title: {
-              text: null
-            },
-            plotOptions: {
-                      series: {
-            animation: false,
-          },
-              pie: {
-                enableMouseTracking: false,
-                states: {
-                  hover: { enabled: false }
-                },
-                dataLabels: {
-                  enabled: true,
-                  distance: 30,
-                  style: {
-                    fontSize: "14px",
-                    color: "#000000",
-                    fontWeight: "400"
-                  },
-                  formatter: function() {
-                    return this.point.name + ": " + Highcharts.numberFormat(this.percentage, 1) + "%";
-                  },
-                  connectorStyle: {
-                    color: "#000000",
-                    width: 1
-                  }
-                },
-                showInLegend: false,
-                borderWidth: 0,
-                innerSize: 0,
-                size: "85%"
-              }
-            },
-            tooltip: {
-              enabled: false
-            },
-            legend: {
-              enabled: false
-            },
-            credits: {
-              enabled: false
-            }
-          }
-        });
+        function createChart() {
+          new Chartkick.PieChart("chart", pieData, {
+            adapter: "highcharts",
+            thousands: ",",
+            points: false,
+            colors: ["black"],
+            curve: true,
+            library: ${JSON.stringify(options)}
+          });
         };
 
         if ("Chartkick" in window) {
