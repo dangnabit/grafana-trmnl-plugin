@@ -1,7 +1,6 @@
 import React from 'react';
 import { Options } from 'highcharts';
-import { Chart } from '@highcharts/react';
-import { ColumnSeries } from '@highcharts/react/series/Column';
+
 const options: Options = {
   chart: {
     height: null,
@@ -67,30 +66,26 @@ const options: Options = {
 };
 
 export function TimeseriesChartContent({ chartData }: { chartData: any }) {
-  // React.useEffect(() => {
-  //   // Timeseries rendered with Chartkick + Highcharts adapter
-  //   function createChart() {
-  //     // @ts-ignore
-  //     new Chartkick.LineChart('chart', chartData, {
-  //       adapter: 'highcharts',
-  //       thousands: ',',
-  //       points: false,
-  //       colors: ['black'],
-  //       curve: true,
-  //       library: JSON.stringify(options),
-  //     });
-  //   }
+  React.useEffect(() => {
+    // Timeseries rendered with Chartkick + Highcharts adapter
+    function createChart() {
+      // @ts-ignore
+      new Chartkick.LineChart('chart', chartData, {
+        adapter: 'highcharts',
+        thousands: ',',
+        points: false,
+        colors: ['black'],
+        curve: true,
+        library: JSON.stringify(options),
+      });
+    }
 
-  //   if ('Chartkick' in window) {
-  //     createChart();
-  //   } else {
-  //     window.addEventListener('chartkick:load', createChart, true);
-  //   }
-  // }, [chartData]);
+    if ('Chartkick' in window) {
+      createChart();
+    } else {
+      window.addEventListener('chartkick:load', createChart, true);
+    }
+  }, [chartData]);
 
-  return (
-    <Chart options={options}>
-      <ColumnSeries data={chartData} {...options} />
-    </Chart>
-  );
+  return null;
 }
