@@ -149,8 +149,18 @@ app.post('/render', async (req: Request, res: Response, next: NextFunction) => {
 
     if (sumValueParam) {
       sumValue = panelData.data_series?.reduce((acc: number, item: any) => {
-        const value = Number(item.value);
-        return acc + (isNaN(value) ? 0 : value);
+        if (typeof item === 'number') {
+          return acc + item;
+        } else if (
+          Array.isArray(item) &&
+          item.length === 2 &&
+          typeof item[1] === 'number'
+        ) {
+          return acc + item[1];
+        } else if ('value' in item && typeof item.value === 'number') {
+          return acc + item.value;
+        }
+        return acc;
       }, 0);
     }
 
