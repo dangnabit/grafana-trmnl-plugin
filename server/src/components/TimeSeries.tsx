@@ -66,17 +66,20 @@ const options: Options = {
 };
 
 export function TimeseriesChartContent({ chartData }: { chartData: any }) {
-  React.useEffect(() => {
-    // Timeseries rendered with Chartkick + Highcharts adapter
-    function createChart() {
-      // @ts-ignore
+  return (
+    <script
+      dangerouslySetInnerHTML={{
+        __html: ` 
+      var chartData = ${JSON.stringify(chartData)};
+      function createChart() {
+      
       new Chartkick.LineChart('chart', chartData, {
         adapter: 'highcharts',
         thousands: ',',
         points: false,
         colors: ['black'],
         curve: true,
-        library: JSON.stringify(options),
+        library: ${JSON.stringify(options)},
       });
     }
 
@@ -84,8 +87,8 @@ export function TimeseriesChartContent({ chartData }: { chartData: any }) {
       createChart();
     } else {
       window.addEventListener('chartkick:load', createChart, true);
-    }
-  }, [chartData]);
-
-  return null;
+    }`,
+      }}
+    />
+  );
 }
