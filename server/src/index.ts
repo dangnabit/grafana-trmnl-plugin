@@ -96,10 +96,41 @@ app.get('/health', (_req: Request, res: Response) => {
   res.status(200).json({ status: 'ok' });
 });
 
+function formatSumValue(
+  value: number | string,
+  param: 'dollar' | 'percentage' | 'kwh',
+): string {
+  if (param === 'dollar') {
+    const numValue = typeof value === 'number' ? value : Number(value);
+    if (isNaN(numValue)) {
+      return String(value);
+    }
+    return `$${numValue}`;
+  }
+  if (param === 'percentage') {
+    const numValue = typeof value === 'number' ? value : Number(value);
+    if (isNaN(numValue)) {
+      return String(value);
+    }
+    return `${numValue}%`;
+  }
+  if (param === 'kwh') {
+    const numValue = typeof value === 'number' ? value : Number(value);
+    if (isNaN(numValue)) {
+      return String(value);
+    }
+    return `${numValue} kWh`;
+  }
+  return String(value);
+}
+
 app.post('/render', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const data = req.body;
     const fullHtml = data?.full_html ?? false;
+
+    const sumValueParam = new URL(data.panel_url).searchParams.get('sumValue');
+
     const panelData = await getPanelData(data);
     const html = generateHtml(
       panelData.data_series,
@@ -114,7 +145,29 @@ app.post('/render', async (req: Request, res: Response, next: NextFunction) => {
       return;
     }
 
-    res.json({ html, generated_at: new Date().toISOString() });
+    let sumValue: number | null = null;
+
+    if (sumValueParam) {
+      sumValue = panelData.data_series?.reduce((acc: number, item: any) => {
+        const value = Number(item.value);
+        return acc + (isNaN(value) ? 0 : value);
+      }, 0);
+    }
+
+    const sumFields = sumValueParam
+      ? {
+          sum_value: formatSumValue(
+            sumValue || 0,
+            sumValueParam as 'dollar' | 'percentage' | 'kwh',
+          ),
+        }
+      : {};
+
+    res.json({
+      html,
+      generated_at: new Date().toISOString(),
+      ...sumFields,
+    });
   } catch (error) {
     next(error);
   }
