@@ -8,7 +8,7 @@ export function BaseTemplate({
   logoSvg?: React.ReactNode;
   chartContent: string;
 }) {
-  return <div dangerouslySetInnerHTML={{ __html: chartContent }} />;
+  return <script dangerouslySetInnerHTML={{ __html: chartContent }} />;
 }
 
 export function Scripts() {

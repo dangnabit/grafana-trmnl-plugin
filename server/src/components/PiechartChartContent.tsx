@@ -46,7 +46,7 @@ const options: Options = {
 };
 
 export function PiechartChartContent({ chartData }: { chartData: any }) {
-  const chartScript = `
+  return `
         var chartData = ${JSON.stringify(chartData)};
         var patternImages = [];
 
@@ -134,6 +134,4 @@ export function PiechartChartContent({ chartData }: { chartData: any }) {
           window.addEventListener("chartkick:load", createChart, true);
         }
     `;
-
-  return <script dangerouslySetInnerHTML={{ __html: chartScript }} />;
 }

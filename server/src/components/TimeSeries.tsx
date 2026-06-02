@@ -66,10 +66,7 @@ const options: Options = {
 };
 
 export function TimeseriesChartContent({ chartData }: { chartData: any }) {
-  return (
-    <script
-      dangerouslySetInnerHTML={{
-        __html: ` 
+  return ` 
       var chartData = ${JSON.stringify(chartData)};
       function createChart() {
       
@@ -87,8 +84,5 @@ export function TimeseriesChartContent({ chartData }: { chartData: any }) {
       createChart();
     } else {
       window.addEventListener('chartkick:load', createChart, true);
-    }`,
-      }}
-    />
-  );
+    }`;
 }

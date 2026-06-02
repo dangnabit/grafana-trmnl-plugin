@@ -89,10 +89,7 @@ const options = (value: number): Options => ({
 });
 
 export function GaugeChartContent({ chartData }: { chartData: any }) {
-  return (
-    <script
-      dangerouslySetInnerHTML={{
-        __html: `
+  return `
         var chartData = ${JSON.stringify(chartData)};
 
         // Gauge panel rendering using Chartkick with Highcharts adapter
@@ -111,8 +108,5 @@ export function GaugeChartContent({ chartData }: { chartData: any }) {
           createChart();
         } else {
           window.addEventListener("chartkick:load", createChart, true);
-        }`,
-      }}
-    />
-  );
+        }`;
 }

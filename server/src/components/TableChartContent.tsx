@@ -62,10 +62,7 @@ export function TableChartContent({ chartData }: { chartData: any }) {
   const seriesData = Array.isArray(chartData)
     ? chartData
     : Object.entries(chartData).map(([key, value]) => [key, value]);
-  return (
-    <script
-      dangerouslySetInnerHTML={{
-        __html: `
+  return `
         var chartData = ${JSON.stringify(seriesData)};
 
         function createChart() {
@@ -83,8 +80,5 @@ export function TableChartContent({ chartData }: { chartData: any }) {
           createChart();
         } else {
           window.addEventListener("chartkick:load", createChart, true);
-        }`,
-      }}
-    />
-  );
+        }`;
 }

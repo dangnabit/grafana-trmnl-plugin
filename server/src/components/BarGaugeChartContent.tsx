@@ -70,10 +70,7 @@ export function BarGaugeChartContent({ chartData }: { chartData: any }) {
         ? chartData
         : Object.entries(chartData).map(([key, value]) => [key, value]);
 
-  return (
-    <script
-      dangerouslySetInnerHTML={{
-        __html: `
+  return `
             var chartData = ${JSON.stringify(seriesData)};
 
             // Bar gauge rendered with Chartkick + Highcharts adapter
@@ -93,8 +90,5 @@ export function BarGaugeChartContent({ chartData }: { chartData: any }) {
             } else {
               window.addEventListener("chartkick:load", createChart, true);
             }
-        `,
-      }}
-    />
-  );
+        `;
 }

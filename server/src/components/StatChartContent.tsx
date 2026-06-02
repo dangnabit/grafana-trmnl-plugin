@@ -54,10 +54,7 @@ const options: Options = {
 };
 
 export function StatChartContent({ chartData }: { chartData: any }) {
-  return (
-    <script
-      dangerouslySetInnerHTML={{
-        __html: `
+  return `
         var chartData = ${JSON.stringify(chartData)};
 
         // Stat panel rendering using Chartkick with Highcharts adapter
@@ -76,8 +73,5 @@ export function StatChartContent({ chartData }: { chartData: any }) {
           createChart();
         } else {
           window.addEventListener("chartkick:load", createChart, true);
-        }`,
-      }}
-    />
-  );
+        }`;
 }
