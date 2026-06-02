@@ -105,9 +105,7 @@ export function generateStatHtml(
 
   const chartData = { value: statValue, formatted: formattedValue };
 
-  const chartContent = ReactDOMServer.renderToStaticMarkup(
-    React.createElement(StatChartContent, { chartData }),
-  );
+  const chartContent = StatChartContent({ chartData });
 
   return renderBaseHtml(title, chartContent);
 }
@@ -121,9 +119,7 @@ export function generateGaugeHtml(
     value: typeof statValue === 'number' ? statValue : Number(statValue) || 0,
   };
 
-  const chartContent = ReactDOMServer.renderToStaticMarkup(
-    React.createElement(GaugeChartContent, { chartData }),
-  );
+  const chartContent = GaugeChartContent({ chartData });
 
   return renderBaseHtml(title, chartContent);
 }
@@ -171,9 +167,7 @@ export function generateTimeseriesHtml(
 
     const chartData = seriesConfig;
 
-    const chartContent = ReactDOMServer.renderToStaticMarkup(
-      React.createElement(TimeseriesChartContent, { chartData }),
-    );
+    const chartContent = TimeseriesChartContent({ chartData });
 
     return renderBaseHtml(title, chartContent);
   }
@@ -182,9 +176,7 @@ export function generateTimeseriesHtml(
     ? dataSeries
     : Object.values(dataSeries)[0];
 
-  const chartContent = ReactDOMServer.renderToStaticMarkup(
-    React.createElement(TimeseriesChartContent, { chartData }),
-  );
+  const chartContent = TimeseriesChartContent({ chartData });
 
   return renderBaseHtml(title, chartContent);
 }
@@ -225,9 +217,7 @@ export function generateBarGaugeHtml(
 
     const chartData = seriesConfig;
 
-    const chartContent = ReactDOMServer.renderToStaticMarkup(
-      React.createElement(BarGaugeChartContent, { chartData }),
-    );
+    const chartContent = BarGaugeChartContent({ chartData });
 
     return renderBaseHtml(title, chartContent);
   }
@@ -236,9 +226,7 @@ export function generateBarGaugeHtml(
     ? dataSeries
     : Object.values(dataSeries)[0];
 
-  const chartContent = ReactDOMServer.renderToStaticMarkup(
-    React.createElement(BarGaugeChartContent, { chartData }),
-  );
+  const chartContent = BarGaugeChartContent({ chartData });
 
   return renderBaseHtml(title, chartContent);
 }
@@ -251,9 +239,7 @@ export function generatePiechartHtml(
     ? dataSeries
     : Object.values(dataSeries)[0];
 
-  const chartContent = ReactDOMServer.renderToStaticMarkup(
-    React.createElement(PiechartChartContent, { chartData }),
-  );
+  const chartContent = PiechartChartContent({ chartData });
 
   return renderBaseHtml(title, chartContent);
 }
@@ -266,9 +252,7 @@ export function generateTableHtml(
     ? dataSeries
     : Object.values(dataSeries)[0];
 
-  const chartContent = ReactDOMServer.renderToStaticMarkup(
-    React.createElement(TableChartContent, { chartData }),
-  );
+  const chartContent = TableChartContent({ chartData });
 
   return renderBaseHtml(title, chartContent);
 }
