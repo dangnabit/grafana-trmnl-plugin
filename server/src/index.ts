@@ -148,20 +148,26 @@ app.post('/render', async (req: Request, res: Response, next: NextFunction) => {
     let sumValue: number | null = null;
 
     if (sumValueParam) {
-      sumValue = panelData.data_series?.reduce((acc: number, item: any) => {
-        if (typeof item === 'number') {
-          return acc + item;
-        } else if (
-          Array.isArray(item) &&
-          item.length === 2 &&
-          typeof item[1] === 'number'
-        ) {
-          return acc + item[1];
-        } else if ('value' in item && typeof item.value === 'number') {
-          return acc + item.value;
-        }
-        return acc;
-      }, 0);
+      const panel_values = Array.isArray(panelData.data_series)
+        ? panelData.data_series
+        : Object.values(panelData.data_series)[0];
+
+      if (Array.isArray(panel_values)) {
+        sumValue = panel_values.reduce((acc: number, item: any) => {
+          if (typeof item === 'number') {
+            return acc + item;
+          } else if (
+            Array.isArray(item) &&
+            item.length === 2 &&
+            typeof item[1] === 'number'
+          ) {
+            return acc + item[1];
+          } else if ('value' in item && typeof item.value === 'number') {
+            return acc + item.value;
+          }
+          return acc;
+        }, 0);
+      }
     }
 
     const sumFields = sumValueParam
