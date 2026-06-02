@@ -10,6 +10,7 @@ import {
   PiechartChartContent,
   TableChartContent,
 } from './components';
+import { TitleBar } from './components/ChartTemplates';
 
 const TRMNL_PATTERN_IMAGES = [
   'https://usetrmnl.com/images/grayscale/gray-1.png',
@@ -36,6 +37,7 @@ function getFullHtml(title: string, content: string): string {
 <body class="environment trmnl">
 <div class="screen">
   ${content}
+  ${renderTitleBar(title)}
   </div>
 </body>
 </html>`;
@@ -75,6 +77,14 @@ function renderBaseHtml(title: string, chartContent: string): string {
     React.createElement(BaseTemplate, {
       title,
       chartContent,
+    }),
+  );
+}
+
+export function renderTitleBar(title: string): string {
+  return ReactDOMServer.renderToStaticMarkup(
+    React.createElement(TitleBar, {
+      title,
     }),
   );
 }

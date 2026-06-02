@@ -2,8 +2,6 @@ import React from 'react';
 import { GrafanaLogo } from './GrafanaLogo';
 
 export function BaseTemplate({
-  title,
-  logoSvg = <GrafanaLogo />,
   chartContent,
 }: {
   title: string;
@@ -19,13 +17,23 @@ export function BaseTemplate({
 
       <div id="chart" className="w--full h--64"></div>
 
-      <div className="title_bar">
-        {logoSvg}
-        <span className="title">{title}</span>
-      </div>
-
       <div dangerouslySetInnerHTML={{ __html: chartContent }} />
     </>
+  );
+}
+
+export function TitleBar({
+  title,
+  logoSvg = <GrafanaLogo />,
+}: {
+  title: string;
+  logoSvg?: React.ReactNode;
+}) {
+  return (
+    <div className="title_bar">
+      {logoSvg}
+      <span className="title">{title}</span>
+    </div>
   );
 }
 
