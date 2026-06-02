@@ -15,7 +15,7 @@ export function BaseTemplate({
       <script src="https://trmnl.com/js/highcharts/12.3.0/pattern-fill.js"></script>
       <script src="https://trmnl.com/js/chartkick/5.0.1/chartkick.min.js"></script>
 
-      <div id="chart" className="w--full h--64"></div>
+      <div id="chart" className="w--full"></div>
 
       <div dangerouslySetInnerHTML={{ __html: chartContent }} />
     </>
