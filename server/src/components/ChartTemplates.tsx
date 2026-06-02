@@ -8,9 +8,8 @@ export function BaseTemplate({
 }: {
   title: string;
   logoSvg?: React.ReactNode;
-  chartContent: React.ReactNode;
+  chartContent: string;
 }) {
-  console.log(chartContent);
   return (
     <>
       <script src="https://trmnl.com/js/highcharts/12.3.0/highcharts.js"></script>
@@ -26,7 +25,7 @@ export function BaseTemplate({
         <span className="title">{title}</span>
       </div>
 
-      {chartContent}
+      <div dangerouslySetInnerHTML={{ __html: chartContent }} />
     </>
   );
 }
