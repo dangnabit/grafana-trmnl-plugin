@@ -8,13 +8,7 @@ export function BaseTemplate({
   logoSvg?: React.ReactNode;
   chartContent: string;
 }) {
-  return (
-    <>
-      <div id="chart" className="w--full" style={{ maxHeight: '100%' }}></div>
-
-      <div dangerouslySetInnerHTML={{ __html: chartContent }} />
-    </>
-  );
+  return <div dangerouslySetInnerHTML={{ __html: chartContent }} />;
 }
 
 export function Scripts() {
