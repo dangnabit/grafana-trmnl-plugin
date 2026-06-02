@@ -1,13 +1,14 @@
 import React from 'react';
+import { GrafanaLogo } from './GrafanaLogo';
 
 export function BaseTemplate({
   title,
-  logoSvg,
+  logoSvg = <GrafanaLogo />,
   chartContent,
 }: {
   title: string;
-  logoSvg: React.ReactNode;
-  chartContent: string;
+  logoSvg?: React.ReactNode;
+  chartContent: React.ReactNode;
 }) {
   return (
     <>
@@ -24,18 +25,18 @@ export function BaseTemplate({
         <span className="title">{title}</span>
       </div>
 
-      <script dangerouslySetInnerHTML={{ __html: chartContent }} />
+      {chartContent}
     </>
   );
 }
 
 export function ErrorTemplate({
   title,
-  logoSvg,
+  logoSvg = <GrafanaLogo />,
   errorHtml,
 }: {
   title: string;
-  logoSvg: React.ReactNode;
+  logoSvg?: React.ReactNode;
   errorHtml: string;
 }) {
   return (

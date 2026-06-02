@@ -1,11 +1,19 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import { BaseTemplate, ErrorTemplate, GrafanaLogo } from './components';
+import {
+  BaseTemplate,
+  ErrorTemplate,
+  TimeseriesChartContent,
+  StatChartContent,
+  GaugeChartContent,
+  BarGaugeChartContent,
+  PiechartChartContent,
+  TableChartContent,
+} from './components';
 
 const TRMNL_PATTERN_IMAGES = [
   'https://usetrmnl.com/images/grayscale/gray-1.png',
   'https://usetrmnl.com/images/grayscale/black.png',
-
   'https://usetrmnl.com/images/grayscale/gray-3.png',
   'https://usetrmnl.com/images/grayscale/gray-7.png',
   'https://usetrmnl.com/images/grayscale/gray-2.png',
@@ -48,7 +56,6 @@ export function generateErrorHtml(
       ReactDOMServer.renderToStaticMarkup(
         React.createElement(ErrorTemplate, {
           title,
-          logoSvg: <GrafanaLogo />,
           errorHtml,
         }),
       ),
@@ -58,7 +65,6 @@ export function generateErrorHtml(
   return ReactDOMServer.renderToStaticMarkup(
     React.createElement(ErrorTemplate, {
       title,
-      logoSvg: <GrafanaLogo />,
       errorHtml,
     }),
   );
@@ -68,7 +74,6 @@ function renderBaseHtml(title: string, chartContent: string): string {
   return ReactDOMServer.renderToStaticMarkup(
     React.createElement(BaseTemplate, {
       title,
-      logoSvg: <GrafanaLogo />,
       chartContent,
     }),
   );
@@ -86,80 +91,9 @@ export function generateStatHtml(
 
   const chartData = { value: statValue, formatted: formattedValue };
 
-  const chartContent = `
-        var chartData = ${JSON.stringify(chartData)};
-
-        // Stat panel rendering using Chartkick with Highcharts adapter
-        var createChart = function() {
-        new Chartkick.LineChart("chart", [[1, chartData.value]], {
-          adapter: "highcharts",
-            thousands: ",",
-              points: false,
-              colors: ["black"],
-              curve: true,
-          library: {
-            chart: {
-              height: null,
-              type: "line",
-              backgroundColor: "transparent"
-            },
-            title: {
-              text: null
-            },
-            xAxis: {
-              visible: false
-            },
-            yAxis: {
-              visible: false
-            },
-            legend: {
-              enabled: false
-            },
-            plotOptions: {
-                      series: {
-            animation: false,
-          },
-              line: {
-                enableMouseTracking: false,
-                states: {
-                  hover: {
-                    enabled: false
-                  }
-                },
-                marker: {
-                  enabled: false
-                },
-                dataLabels: {
-                  enabled: true,
-                  formatter: function() {
-                    return chartData.formatted;
-                  },
-                  style: {
-                    fontSize: "120px",
-                    fontWeight: "bold",
-                    color: "#000000",
-                    textOutline: "none"
-                  },
-                  x: 0,
-                  y: 0,
-                  verticalAlign: "middle",
-                  align: "center"
-                }
-              }
-            },
-            credits: {
-              enabled: false
-            }
-          }
-        });
-        };
-
-        if ("Chartkick" in window) {
-          createChart();
-        } else {
-          window.addEventListener("chartkick:load", createChart, true);
-        }
-    `;
+  const chartContent = ReactDOMServer.renderToStaticMarkup(
+    React.createElement(StatChartContent, { chartData }),
+  );
 
   return renderBaseHtml(title, chartContent);
 }
@@ -173,107 +107,9 @@ export function generateGaugeHtml(
     value: typeof statValue === 'number' ? statValue : Number(statValue) || 0,
   };
 
-  const chartContent = `
-        var chartData = ${JSON.stringify(chartData)};
-
-        // Gauge panel rendering using Chartkick with Highcharts adapter
-        var createChart = function() {
-        new Chartkick.LineChart("chart", [[1, chartData.value]], {
-          adapter: "highcharts",
-              thousands: ",",
-              points: false,
-              colors: ["black"],
-              curve: true,
-          library: {
-            chart: {
-              height: null,
-              type: "gauge",
-              spacing: [10, 10, 5, 10]
-            },
-            title: {
-              text: null
-            },
-            pane: {
-              startAngle: -150,
-              endAngle: 150,
-              background: {
-                backgroundColor: "transparent",
-                borderWidth: 0
-              }
-            },
-            plotOptions: {
-                      series: {
-            animation: false,
-          },
-              gauge: {
-                pivot: {
-                  backgroundColor: "transparent"
-                },
-                dial: {
-                  backgroundColor: "transparent",
-                  baseWidth: 0
-                }
-              }
-            },
-            yAxis: {
-              min: 0,
-              max: 100,
-              minorTickInterval: 0,
-              tickColor: "#000000",
-              tickLength: 40,
-              tickPixelInterval: 40,
-              tickWidth: 2,
-              lineWidth: 0,
-              title: {
-                text: null
-              },
-              labels: {
-                distance: 15,
-                style: {
-                  fontSize: "16px",
-                  color: "#000000"
-                }
-              },
-              plotBands: [{
-                from: 1,
-                to: chartData.value,
-                color: "#666666",
-                innerRadius: "82%",
-                borderRadius: "50%"
-              }, {
-                from: chartData.value + 1,
-                to: 100,
-                color: "#CCCCCC",
-                innerRadius: "82%",
-                borderRadius: "50%"
-              }]
-            },
-            series: [{
-              name: "Value",
-              data: [chartData.value],
-              dataLabels: {
-                format: "{point.y:.2f}",
-                borderWidth: 0,
-                style: {
-                  fontSize: "2em",
-                  fontWeight: "400",
-                  color: "#000000"
-                }
-              }
-            }],
-            credits: {
-              enabled: false
-            }
-          }
-        });
-        };
-
-        if ("Chartkick" in window) {
-          createChart();
-        } else {
-          window.addEventListener("chartkick:load", createChart, true);
-        }
-    `;
+  const chartContent = ReactDOMServer.renderToStaticMarkup(
+    React.createElement(GaugeChartContent, { chartData }),
+  );
 
   return renderBaseHtml(title, chartContent);
 }
@@ -321,96 +157,9 @@ export function generateTimeseriesHtml(
 
     const chartData = seriesConfig;
 
-    const chartContent = `
-            var chartData = ${JSON.stringify(chartData)};
-
-            // Multi-series timeseries rendered with Chartkick + Highcharts adapter
-            var createChart = function() {
-            new Chartkick.LineChart("chart", chartData, {
-              adapter: "highcharts",
-              thousands: ",",
-              points: false,
-              colors: ["black"],
-              curve: true,
-              library: {
-                chart: {
-                  height: null,
-                  type: "spline",
-                  spacing: [10, 10, 5, 10],
-                },
-                title: {
-                  text: null
-                },
-                plotOptions: {
-                          series: {
-            animation: false,
-          },
-                  line: {
-                    enableMouseTracking: false,
-                    states: {
-                      hover: { enabled: false }
-                    },
-                    marker: {
-                      enabled: false
-                    }
-                  }
-                },
-                tooltip: {
-                  enabled: false
-                },
-                legend: {
-                  enabled: true,
-                  align: "left",
-                  verticalAlign: "top",
-                  layout: "horizontal",
-                  itemStyle: {
-                    fontSize: "14px",
-                    color: "#000000"
-                  }
-                },
-                yAxis: {
-                  labels: {
-                    style: { fontSize: "16px", color: "#000000" }
-                  },
-                  gridLineDashStyle: "shortdot",
-                  gridLineWidth: 1,
-                  gridLineColor: "#000000",
-                  tickAmount: 5,
-                  title: {
-                    text: null
-                  }
-                },
-                xAxis: {
-                  type: "datetime",
-                  labels: {
-                    style: { fontSize: "16px", color: "#000000" },
-                    padding: 5,
-                    y: 25
-                  },
-                  lineWidth: 0,
-                  gridLineDashStyle: "dot",
-                  tickWidth: 1,
-                  tickLength: 0,
-                  gridLineWidth: 1,
-                  gridLineColor: "#000000",
-                  tickPixelInterval: 120,
-                  title: {
-                    text: null
-                  }
-                },
-                credits: {
-                  enabled: false
-                }
-              }
-            });
-            };
-
-            if ("Chartkick" in window) {
-              createChart();
-            } else {
-              window.addEventListener("chartkick:load", createChart, true);
-            }
-        `;
+    const chartContent = ReactDOMServer.renderToStaticMarkup(
+      React.createElement(TimeseriesChartContent, { chartData }),
+    );
 
     return renderBaseHtml(title, chartContent);
   }
@@ -419,90 +168,9 @@ export function generateTimeseriesHtml(
     ? dataSeries
     : Object.values(dataSeries)[0];
 
-  const chartContent = `
-            var chartData = ${JSON.stringify(chartData)};
-
-            // Single series timeseries rendered with Chartkick + Highcharts adapter
-            var createChart = function() {
-            new Chartkick.LineChart("chart", chartData, {
-              adapter: "highcharts",
-              thousands: ",",
-              points: false,
-              colors: ["black"],
-              curve: true,
-              library: {
-                chart: {
-                  height: null,
-                  type: "spline",
-                  spacing: [10, 10, 5, 10],
-                },
-                title: {
-                  text: null
-                },
-                plotOptions: {
-                          series: {
-            animation: false,
-          },
-                  line: {
-                    enableMouseTracking: false,
-                    states: {
-                      hover: { enabled: false }
-                    },
-                    marker: {
-                      enabled: false
-                    }
-                  }
-                },
-                tooltip: {
-                  enabled: false
-                },
-                legend: {
-                  enabled: false
-                },
-                yAxis: {
-                  labels: {
-                    style: { fontSize: "16px", color: "#000000" }
-                  },
-                  gridLineDashStyle: "shortdot",
-                  gridLineWidth: 1,
-                  gridLineColor: "#000000",
-                  tickAmount: 5,
-                  title: {
-                    text: null
-                  }
-                },
-                xAxis: {
-                  type: "datetime",
-                  labels: {
-                    style: { fontSize: "16px", color: "#000000" },
-                    padding: 5,
-                    y: 25
-                  },
-                  lineWidth: 0,
-                  gridLineDashStyle: "dot",
-                  tickWidth: 1,
-                  tickLength: 0,
-                  gridLineWidth: 1,
-                  gridLineColor: "#000000",
-                  tickPixelInterval: 120,
-                  title: {
-                    text: null
-                  }
-                },
-                credits: {
-                  enabled: false
-                }
-              }
-            });
-            };
-
-            if ("Chartkick" in window) {
-              createChart();
-            } else {
-              window.addEventListener("chartkick:load", createChart, true);
-            }
-
-        `;
+  const chartContent = ReactDOMServer.renderToStaticMarkup(
+    React.createElement(TimeseriesChartContent, { chartData }),
+  );
 
   return renderBaseHtml(title, chartContent);
 }
@@ -541,89 +209,11 @@ export function generateBarGaugeHtml(
       },
     );
 
-    const chartContent = `
-            var chartData = ${JSON.stringify(seriesConfig)};
+    const chartData = seriesConfig;
 
-            // Multi-series bar gauge rendered with Chartkick + Highcharts adapter
-            var createChart = function() {
-            new Chartkick.ColumnChart("chart", chartData, {
-              adapter: "highcharts",
-              thousands: ",",
-              points: false,
-              colors: ["black"],
-              curve: true,
-              library: {
-                chart: {
-                  height: null,
-                  type: "column",
-                  spacing: [10, 10, 5, 10]
-                },
-                title: {
-                  text: null
-                },
-                plotOptions: {
-                          series: {
-            animation: false,
-          },
-                  column: {
-                    enableMouseTracking: false,
-                    states: {
-                      hover: { enabled: false }
-                    }
-                  }
-                },
-                tooltip: {
-                  enabled: false
-                },
-                legend: {
-                  enabled: true,
-                  align: "left",
-                  verticalAlign: "top",
-                  layout: "horizontal",
-                  itemStyle: {
-                    fontSize: "14px",
-                    color: "#000000"
-                  }
-                },
-                yAxis: {
-                  labels: {
-                    style: { fontSize: "16px", color: "#000000" }
-                  },
-                  gridLineDashStyle: "shortdot",
-                  gridLineWidth: 1,
-                  gridLineColor: "#000000",
-                  tickAmount: 5,
-                  title: {
-                    text: null
-                  }
-                },
-                xAxis: {
-                  labels: {
-                    style: { fontSize: "16px", color: "#000000" }
-                  },
-                  lineWidth: 0,
-                  gridLineDashStyle: "dot",
-                  tickWidth: 1,
-                  tickLength: 0,
-                  gridLineWidth: 1,
-                  gridLineColor: "#000000",
-                  title: {
-                    text: null
-                  }
-                },
-                credits: {
-                  enabled: false
-                }
-              }
-            });
-            };
-
-            if ("Chartkick" in window) {
-              createChart();
-            } else {
-              window.addEventListener("chartkick:load", createChart, true);
-            }
-        `;
+    const chartContent = ReactDOMServer.renderToStaticMarkup(
+      React.createElement(BarGaugeChartContent, { chartData }),
+    );
 
     return renderBaseHtml(title, chartContent);
   }
@@ -632,94 +222,9 @@ export function generateBarGaugeHtml(
     ? dataSeries
     : Object.values(dataSeries)[0];
 
-  const chartContent = `
-            var chartData = ${JSON.stringify(chartData)};
-
-            // Convert data to chart format for Chartkick
-            var seriesData = [];
-            if (Array.isArray(chartData)) {
-              seriesData = chartData;
-            } else {
-              for (var key in chartData) {
-                if (Object.prototype.hasOwnProperty.call(chartData, key)) {
-                  seriesData.push([key, chartData[key]]);
-                }
-              }
-            }
-
-            // Single series bar gauge rendered with Chartkick + Highcharts adapter
-            var createChart = function() {
-            new Chartkick.ColumnChart("chart", seriesData, {
-              adapter: "highcharts",
-              thousands: ",",
-              points: false,
-              colors: ["black"],
-              curve: true,
-              library: {
-                chart: {
-                  height: null,
-                  type: "column",
-                  spacing: [10, 10, 5, 10]
-                },
-                title: {
-                  text: null
-                },
-                plotOptions: {
-                          series: {
-            animation: false,
-          },
-                  column: {
-                    enableMouseTracking: false,
-                    states: {
-                      hover: { enabled: false }
-                    }
-                  }
-                },
-                tooltip: {
-                  enabled: false
-                },
-                legend: {
-                  enabled: false
-                },
-                yAxis: {
-                  labels: {
-                    style: { fontSize: "16px", color: "#000000" }
-                  },
-                  gridLineDashStyle: "shortdot",
-                  gridLineWidth: 1,
-                  gridLineColor: "#000000",
-                  tickAmount: 5,
-                  title: {
-                    text: null
-                  }
-                },
-                xAxis: {
-                  labels: {
-                    style: { fontSize: "16px", color: "#000000" }
-                  },
-                  lineWidth: 0,
-                  gridLineDashStyle: "dot",
-                  tickWidth: 1,
-                  tickLength: 0,
-                  gridLineWidth: 1,
-                  gridLineColor: "#000000",
-                  title: {
-                    text: null
-                  }
-                },
-                credits: {
-                  enabled: false
-                }
-              }
-            });
-            };
-
-            if ("Chartkick" in window) {
-              createChart();
-            } else {
-              window.addEventListener("chartkick:load", createChart, true);
-            }
-        `;
+  const chartContent = ReactDOMServer.renderToStaticMarkup(
+    React.createElement(BarGaugeChartContent, { chartData }),
+  );
 
   return renderBaseHtml(title, chartContent);
 }
@@ -732,130 +237,9 @@ export function generatePiechartHtml(
     ? dataSeries
     : Object.values(dataSeries)[0];
 
-  const chartContent = `
-        var chartData = ${JSON.stringify(chartData)};
-        var patternImages = ${JSON.stringify(TRMNL_PATTERN_IMAGES)};
-
-        var pieData = [];
-
-        if (Array.isArray(chartData)) {
-          for (var i = 0; i < chartData.length; i++) {
-            var item = chartData[i];
-            var name = item[0];
-            var value = item[1];
-            var color;
-
-            if (i === 0) {
-              color = "#000000";
-            } else {
-              color = {
-                pattern: {
-                  image: patternImages[(i - 1) % patternImages.length],
-                  width: 12,
-                  height: 12
-                }
-              };
-            }
-
-            pieData.push({
-              name: name,
-              y: value,
-              color: color
-            });
-          }
-        } else {
-          var dataKeys = Object.keys(chartData);
-          for (var i = 0; i < dataKeys.length; i++) {
-            var key = dataKeys[i];
-            var value = chartData[key];
-            var color;
-
-            if (i === 0) {
-              color = "#000000";
-            } else {
-              color = {
-                pattern: {
-                  image: patternImages[(i - 1) % patternImages.length],
-                  width: 12,
-                  height: 12
-                }
-              };
-            }
-
-            pieData.push({
-              name: key,
-              y: value,
-              color: color
-            });
-          }
-        }
-
-        var createChart = function() {
-        new Chartkick.PieChart("chart", pieData, {
-          adapter: "highcharts",
-              thousands: ",",
-              points: false,
-              colors: ["black"],
-              curve: true,
-          library: {
-            chart: {
-              height: null,
-              type: "pie",
-              spacing: [10, 10, 5, 10]
-            },
-            title: {
-              text: null
-            },
-            plotOptions: {
-                      series: {
-            animation: false,
-          },
-              pie: {
-                enableMouseTracking: false,
-                states: {
-                  hover: { enabled: false }
-                },
-                dataLabels: {
-                  enabled: true,
-                  distance: 30,
-                  style: {
-                    fontSize: "14px",
-                    color: "#000000",
-                    fontWeight: "400"
-                  },
-                  formatter: function() {
-                    return this.point.name + ": " + Highcharts.numberFormat(this.percentage, 1) + "%";
-                  },
-                  connectorStyle: {
-                    color: "#000000",
-                    width: 1
-                  }
-                },
-                showInLegend: false,
-                borderWidth: 0,
-                innerSize: 0,
-                size: "85%"
-              }
-            },
-            tooltip: {
-              enabled: false
-            },
-            legend: {
-              enabled: false
-            },
-            credits: {
-              enabled: false
-            }
-          }
-        });
-        };
-
-        if ("Chartkick" in window) {
-          createChart();
-        } else {
-          window.addEventListener("chartkick:load", createChart, true);
-        }
-    `;
+  const chartContent = ReactDOMServer.renderToStaticMarkup(
+    React.createElement(PiechartChartContent, { chartData }),
+  );
 
   return renderBaseHtml(title, chartContent);
 }
@@ -868,92 +252,9 @@ export function generateTableHtml(
     ? dataSeries
     : Object.values(dataSeries)[0];
 
-  const chartContent = `
-        var chartData = ${JSON.stringify(chartData)};
-
-        var seriesData = [];
-        if (Array.isArray(chartData)) {
-          seriesData = chartData;
-        } else {
-          for (var key in chartData) {
-            if (Object.prototype.hasOwnProperty.call(chartData, key)) {
-              seriesData.push([key, chartData[key]]);
-            }
-          }
-        }
-
-        var createChart = function() {
-        new Chartkick.ColumnChart("chart", seriesData, {
-          adapter: "highcharts",
-              thousands: ",",
-              points: false,
-              colors: ["black"],
-              curve: true,
-          library: {
-            chart: {
-              height: null,
-              type: "column",
-              spacing: [10, 10, 5, 10]
-            },
-            title: {
-              text: null
-            },
-            plotOptions: {
-                      series: {
-            animation: false,
-          },
-              column: {
-                enableMouseTracking: false,
-                states: {
-                  hover: { enabled: false }
-                }
-              }
-            },
-            tooltip: {
-              enabled: false
-            },
-            legend: {
-              enabled: false
-            },
-            yAxis: {
-              labels: {
-                style: { fontSize: "16px", color: "#000000" }
-              },
-              gridLineDashStyle: "shortdot",
-              gridLineWidth: 1,
-              gridLineColor: "#000000",
-              tickAmount: 5,
-              title: {
-                text: null
-              }
-            },
-            xAxis: {
-              labels: {
-                style: { fontSize: "16px", color: "#000000" }
-              },
-              lineWidth: 0,
-              gridLineDashStyle: "dot",
-              tickWidth: 1,
-              tickLength: 0,
-              gridLineWidth: 1,
-              gridLineColor: "#000000",
-              title: {
-                text: null
-              }
-            },
-            credits: {
-              enabled: false
-            }
-          }
-        });
-        };
-
-        if ("Chartkick" in window) {
-          createChart();
-        } else {
-          window.addEventListener("chartkick:load", createChart, true);
-        }
-    `;
+  const chartContent = ReactDOMServer.renderToStaticMarkup(
+    React.createElement(TableChartContent, { chartData }),
+  );
 
   return renderBaseHtml(title, chartContent);
 }
