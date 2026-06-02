@@ -172,6 +172,8 @@ export function generateTimeseriesHtml(
     React.createElement(TimeseriesChartContent, { chartData }),
   );
 
+  console.log(chartContent);
+
   return renderBaseHtml(title, chartContent);
 }
 

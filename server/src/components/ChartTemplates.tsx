@@ -10,6 +10,7 @@ export function BaseTemplate({
   logoSvg?: React.ReactNode;
   chartContent: React.ReactNode;
 }) {
+  console.log(chartContent);
   return (
     <>
       <script src="https://trmnl.com/js/highcharts/12.3.0/highcharts.js"></script>
