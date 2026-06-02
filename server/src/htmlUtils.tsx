@@ -10,7 +10,7 @@ import {
   PiechartChartContent,
   TableChartContent,
 } from './components';
-import { TitleBar } from './components/ChartTemplates';
+import { TitleBar, Scripts } from './components/ChartTemplates';
 
 const TRMNL_PATTERN_IMAGES = [
   'https://usetrmnl.com/images/grayscale/gray-1.png',
@@ -87,6 +87,10 @@ export function renderTitleBar(title: string): string {
       title,
     }),
   );
+}
+
+export function renderScripts(): string {
+  return ReactDOMServer.renderToStaticMarkup(React.createElement(Scripts));
 }
 
 export function generateStatHtml(

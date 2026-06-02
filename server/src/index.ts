@@ -1,7 +1,12 @@
 import express, { NextFunction, Request, Response } from 'express';
 import path from 'path';
 import * as grafanaUtils from './grafanaUtils';
-import { generateErrorHtml, generateHtml, renderTitleBar } from './htmlUtils';
+import {
+  generateErrorHtml,
+  generateHtml,
+  renderScripts,
+  renderTitleBar,
+} from './htmlUtils';
 import {
   DashboardMetadataException,
   GrafanaException,
@@ -141,6 +146,8 @@ app.post('/render', async (req: Request, res: Response, next: NextFunction) => {
 
     const title_bar = renderTitleBar(panelData.panel_title);
 
+    const scripts = renderScripts();
+
     if (fullHtml) {
       res.setHeader('Content-Type', 'text/html; charset=utf-8');
       res.send(html);
@@ -184,6 +191,7 @@ app.post('/render', async (req: Request, res: Response, next: NextFunction) => {
     res.json({
       html,
       title_bar,
+      scripts,
       generated_at: new Date().toISOString(),
       ...sumFields,
     });
