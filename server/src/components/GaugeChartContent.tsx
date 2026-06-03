@@ -88,13 +88,19 @@ const options = (value: number): Options => ({
   },
 });
 
-export function GaugeChartContent({ chartData }: { chartData: any }) {
+export function GaugeChartContent({
+  chartData,
+  id = 'chart',
+}: {
+  chartData: any;
+  id?: string;
+}) {
   return `
         var chartData = ${JSON.stringify(chartData)};
 
         // Gauge panel rendering using Chartkick with Highcharts adapter
         function createChart() {
-          new Chartkick.LineChart("chart", [[1, chartData.value]], {
+          new Chartkick.LineChart("${id}", [[1, chartData.value]], {
             adapter: "highcharts",
             thousands: ",",
             points: false,

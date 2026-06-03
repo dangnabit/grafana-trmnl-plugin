@@ -58,7 +58,13 @@ const options: Options = {
   },
 };
 
-export function BarGaugeChartContent({ chartData }: { chartData: any }) {
+export function BarGaugeChartContent({
+  chartData,
+  id = 'chart',
+}: {
+  chartData: any;
+  id?: string;
+}) {
   const seriesData =
     Array.isArray(chartData) &&
     chartData.length > 0 &&
@@ -75,7 +81,7 @@ export function BarGaugeChartContent({ chartData }: { chartData: any }) {
 
             // Bar gauge rendered with Chartkick + Highcharts adapter
             function createChart() {
-              new Chartkick.ColumnChart("chart", seriesData, {
+              new Chartkick.ColumnChart("${id}", seriesData, {
                 adapter: "highcharts",
                 thousands: ",",
                 points: false,

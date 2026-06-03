@@ -58,7 +58,13 @@ const options: Options = {
   },
 };
 
-export function TableChartContent({ chartData }: { chartData: any }) {
+export function TableChartContent({
+  chartData,
+  id = 'chart',
+}: {
+  chartData: any;
+  id?: string;
+}) {
   const seriesData = Array.isArray(chartData)
     ? chartData
     : Object.entries(chartData).map(([key, value]) => [key, value]);
@@ -66,7 +72,7 @@ export function TableChartContent({ chartData }: { chartData: any }) {
         var chartData = ${JSON.stringify(seriesData)};
 
         function createChart() {
-        new Chartkick.ColumnChart("chart", chartData, {
+        new Chartkick.ColumnChart("${id}", chartData, {
           adapter: "highcharts",
           thousands: ",",
           points: false,

@@ -65,12 +65,18 @@ const options: Options = {
   },
 };
 
-export function TimeseriesChartContent({ chartData }: { chartData: any }) {
+export function TimeseriesChartContent({
+  chartData,
+  id = 'chart',
+}: {
+  chartData: any;
+  id?: string;
+}) {
   return ` 
       var chartData = ${JSON.stringify(chartData)};
       function createChart() {
       
-      new Chartkick.LineChart('chart', chartData, {
+      new Chartkick.LineChart("${id}", chartData, {
         adapter: 'highcharts',
         thousands: ',',
         points: false,

@@ -45,7 +45,13 @@ const options: Options = {
   },
 };
 
-export function PiechartChartContent({ chartData }: { chartData: any }) {
+export function PiechartChartContent({
+  chartData,
+  id = 'chart',
+}: {
+  chartData: any;
+  id?: string;
+}) {
   return `
         var chartData = ${JSON.stringify(chartData)};
         var patternImages = [];
@@ -118,7 +124,7 @@ export function PiechartChartContent({ chartData }: { chartData: any }) {
         }
 
         function createChart() {
-          new Chartkick.PieChart("chart", pieData, {
+          new Chartkick.PieChart("${id}", pieData, {
             adapter: "highcharts",
             thousands: ",",
             points: false,
