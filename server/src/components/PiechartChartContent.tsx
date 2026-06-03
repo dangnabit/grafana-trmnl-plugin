@@ -52,6 +52,7 @@ export function PiechartChartContent({
   chartData: any;
   id?: string;
 }) {
+  const functionString = id.replace(/[^a-zA-Z0-9_]/g, '_');
   return `
         var chartData = ${JSON.stringify(chartData)};
         var patternImages = [];
@@ -123,7 +124,7 @@ export function PiechartChartContent({
           }
         }
 
-        function createChart() {
+        function createChart_${functionString}() {
           new Chartkick.PieChart("${id}", pieData, {
             adapter: "highcharts",
             thousands: ",",
@@ -135,9 +136,9 @@ export function PiechartChartContent({
         };
 
         if ("Chartkick" in window) {
-          createChart();
+          createChart_${functionString}();
         } else {
-          window.addEventListener("chartkick:load", createChart, true);
+          window.addEventListener("chartkick:load", createChart_${functionString}, true);
         }
     `;
 }

@@ -72,9 +72,10 @@ export function TimeseriesChartContent({
   chartData: any;
   id?: string;
 }) {
+  const functionString = id.replace(/[^a-zA-Z0-9_]/g, '_');
   return ` 
       var chartData = ${JSON.stringify(chartData)};
-      function createChart() {
+      function createChart_${functionString}() {
       
       new Chartkick.LineChart("${id}", chartData, {
         adapter: 'highcharts',
@@ -87,8 +88,8 @@ export function TimeseriesChartContent({
     }
 
     if ('Chartkick' in window) {
-      createChart();
+      createChart_${functionString}();
     } else {
-      window.addEventListener('chartkick:load', createChart, true);
+      window.addEventListener('chartkick:load', createChart_${functionString}, true);
     }`;
 }

@@ -95,11 +95,12 @@ export function GaugeChartContent({
   chartData: any;
   id?: string;
 }) {
+  const functionString = id.replace(/[^a-zA-Z0-9_]/g, '_');
   return `
         var chartData = ${JSON.stringify(chartData)};
 
         // Gauge panel rendering using Chartkick with Highcharts adapter
-        function createChart() {
+        function createChart_${functionString}() {
           new Chartkick.LineChart("${id}", [[1, chartData.value]], {
             adapter: "highcharts",
             thousands: ",",
@@ -111,8 +112,8 @@ export function GaugeChartContent({
         };
 
         if ("Chartkick" in window) {
-          createChart();
+          createChart_${functionString}();
         } else {
-          window.addEventListener("chartkick:load", createChart, true);
+          window.addEventListener("chartkick:load", createChart_${functionString}, true);
         }`;
 }

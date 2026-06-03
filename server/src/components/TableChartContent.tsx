@@ -68,10 +68,12 @@ export function TableChartContent({
   const seriesData = Array.isArray(chartData)
     ? chartData
     : Object.entries(chartData).map(([key, value]) => [key, value]);
+
+  const functionString = id.replace(/[^a-zA-Z0-9_]/g, '_');
   return `
         var chartData = ${JSON.stringify(seriesData)};
 
-        function createChart() {
+        function createChart_${functionString}() {
         new Chartkick.ColumnChart("${id}", chartData, {
           adapter: "highcharts",
           thousands: ",",
@@ -83,8 +85,8 @@ export function TableChartContent({
         };
 
         if ("Chartkick" in window) {
-          createChart();
+          createChart_${functionString}();
         } else {
-          window.addEventListener("chartkick:load", createChart, true);
+          window.addEventListener("chartkick:load", createChart_${functionString}, true);
         }`;
 }

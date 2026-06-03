@@ -76,11 +76,13 @@ export function BarGaugeChartContent({
         ? chartData
         : Object.entries(chartData).map(([key, value]) => [key, value]);
 
+  const functionString = id.replace(/[^a-zA-Z0-9_]/g, '_');
+
   return `
             var chartData = ${JSON.stringify(seriesData)};
 
             // Bar gauge rendered with Chartkick + Highcharts adapter
-            function createChart() {
+            function createChart_${functionString}() {
               new Chartkick.ColumnChart("${id}", seriesData, {
                 adapter: "highcharts",
                 thousands: ",",
@@ -92,9 +94,9 @@ export function BarGaugeChartContent({
             };
 
             if ("Chartkick" in window) {
-              createChart();
+              createChart_${functionString}();
             } else {
-              window.addEventListener("chartkick:load", createChart, true);
+              window.addEventListener("chartkick:load", createChart_${functionString}, true);
             }
         `;
 }
