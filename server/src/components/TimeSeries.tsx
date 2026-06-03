@@ -72,12 +72,12 @@ export function TimeseriesChartContent({
   chartData: any;
   id?: string;
 }) {
-  const functionString = id.replace(/[^a-zA-Z0-9_]/g, '_');
+  const cleanId = id.replace(/[^a-zA-Z0-9_]/g, '_');
   return ` 
       var chartData = ${JSON.stringify(chartData)};
-      function createChart_${functionString}() {
+      function createChart_${cleanId}() {
       
-      new Chartkick.LineChart("${id}", chartData, {
+      new Chartkick.LineChart("${cleanId}", chartData, {
         adapter: 'highcharts',
         thousands: ',',
         points: false,
@@ -88,8 +88,8 @@ export function TimeseriesChartContent({
     }
 
     if ('Chartkick' in window) {
-      createChart_${functionString}();
+      createChart_${cleanId}();
     } else {
-      window.addEventListener('chartkick:load', createChart_${functionString}, true);
+      window.addEventListener('chartkick:load', createChart_${cleanId}, true);
     }`;
 }

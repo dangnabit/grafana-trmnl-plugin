@@ -191,7 +191,7 @@ app.post('/render', async (req: Request, res: Response, next: NextFunction) => {
     res.json({
       html,
       title_bar,
-      title: panelData.panel_title,
+      title: panelData.panel_title.replace(/[^a-zA-Z0-9_]/g, '_'),
       scripts,
       generated_at: new Date().toISOString(),
       ...sumFields,
