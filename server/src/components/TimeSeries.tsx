@@ -4,7 +4,7 @@ import { Options } from 'highcharts';
 const options: Options = {
   chart: {
     height: null,
-    type: 'spline',
+    type: 'area',
     spacing: [10, 10, 5, 10],
   },
   title: {
@@ -15,6 +15,7 @@ const options: Options = {
       animation: false,
     },
     line: {
+      step: 'left',
       enableMouseTracking: false,
       states: {
         hover: { enabled: false },
@@ -50,7 +51,6 @@ const options: Options = {
       y: 25,
     },
     lineWidth: 0,
-
     tickWidth: 1,
     tickLength: 0,
     gridLineWidth: 1,
