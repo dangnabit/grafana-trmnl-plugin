@@ -69,12 +69,12 @@ export function TableChartContent({
     ? chartData
     : Object.entries(chartData).map(([key, value]) => [key, value]);
 
-  const functionString = id.replace(/[^a-zA-Z0-9_]/g, '_');
+  const cleanId = id.replace(/[^a-zA-Z0-9_]/g, '_');
   return `
-        var chartData = ${JSON.stringify(seriesData)};
+        var chartData_${cleanId} = ${JSON.stringify(seriesData)};
 
-        function createChart_${functionString}() {
-        new Chartkick.ColumnChart("${id}", chartData, {
+        function createChart_${cleanId}() {
+        new Chartkick.ColumnChart("${cleanId}", chartData_${cleanId}, {
           adapter: "highcharts",
           thousands: ",",
           points: false,
@@ -85,8 +85,8 @@ export function TableChartContent({
         };
 
         if ("Chartkick" in window) {
-          createChart_${functionString}();
+          createChart_${cleanId}();
         } else {
-          window.addEventListener("chartkick:load", createChart_${functionString}, true);
+          window.addEventListener("chartkick:load", createChart_${cleanId}, true);
         }`;
 }
