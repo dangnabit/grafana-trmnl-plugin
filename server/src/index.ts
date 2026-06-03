@@ -191,6 +191,7 @@ app.post('/render', async (req: Request, res: Response, next: NextFunction) => {
     res.json({
       html,
       title_bar,
+      title: panelData.panel_title,
       scripts,
       generated_at: new Date().toISOString(),
       ...sumFields,
