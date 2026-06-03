@@ -74,10 +74,10 @@ export function TimeseriesChartContent({
 }) {
   const cleanId = id.replace(/[^a-zA-Z0-9_]/g, '_');
   return ` 
-      var chartData = ${JSON.stringify(chartData)};
+      var chartData_${cleanId} = ${JSON.stringify(chartData)};
       function createChart_${cleanId}() {
       
-      new Chartkick.LineChart("${cleanId}", chartData, {
+      new Chartkick.LineChart("${cleanId}", chartData_${cleanId}, {
         adapter: 'highcharts',
         thousands: ',',
         points: false,
