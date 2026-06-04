@@ -71,22 +71,8 @@ export function TableChartContent({
 
   const cleanId = id.replace(/[^a-zA-Z0-9_]/g, '_');
   return `
-        var chartData_${cleanId} = ${JSON.stringify(seriesData)};
+    var series = ${JSON.stringify(seriesData)}
 
-        function createChart_${cleanId}() {
-        new Chartkick.ColumnChart("${cleanId}", chartData_${cleanId}, {
-          adapter: "highcharts",
-          thousands: ",",
-          points: false,
-          colors: ["black"],
-          curve: true,
-          library: ${JSON.stringify(options)}
-        });
-        };
-
-        if ("Chartkick" in window) {
-          createChart_${cleanId}();
-        } else {
-          window.addEventListener("chartkick:load", createChart_${cleanId}, true);
-        }`;
+    var chartData = ${JSON.stringify(chartData)};
+  `;
 }
