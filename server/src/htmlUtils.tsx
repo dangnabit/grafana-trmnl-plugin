@@ -250,7 +250,7 @@ export function generateTableHtml(
 ): string {
   const chartData = Array.isArray(dataSeries)
     ? dataSeries
-    : Object.values(dataSeries)[0];
+    : Object.entries(dataSeries);
 
   const chartContent = TableChartContent({ chartData, id: title });
 
